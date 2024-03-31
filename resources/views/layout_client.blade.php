@@ -16,6 +16,15 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
+
+        .img_logo {
+            top: -23px;
+            left: -135px;
+            height: 100px;
+            width: 100px;
+            position: absolute;
+            border-radius: 50%;
+        }
     </style>
 </head>
 <body>
@@ -28,9 +37,7 @@
                     <img alt="bg-section-banner" decoding="async" data-nimg="fill" class="h-full w-full object-cover" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwAB/31/3KwAAAAASUVORK5CYII=" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
                 </picture>
                 <div class="container md:container h-[100%] md:relative md:h-[auto] css-1zrptk">
-                    <div>
-
-                    </div>
+                    <div></div>
                 </div>
                 <div class="search-section col-span-full mt-1.5 grid h-[36px] content-center transition-[margin] md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-2 md:mx-auto md:mt-0 md:h-auto md:w-[750px]">
                     <div class="cs-search-wrapper relative">
@@ -42,6 +49,9 @@
                                         <path d="M10.9414 1.93125C5.98269 1.93125 1.94336 5.97057 1.94336 10.9293C1.94336 15.888 5.98269 19.9352 10.9414 19.9352C13.0594 19.9352 15.0074 19.193 16.5469 17.9606L20.2949 21.7066C20.4841 21.888 20.7367 21.988 20.9987 21.9853C21.2607 21.9826 21.5112 21.8775 21.6966 21.6923C21.882 21.5072 21.9875 21.2569 21.9906 20.9949C21.9936 20.7329 21.8939 20.4801 21.7129 20.2907L17.9648 16.5427C19.1983 15.0008 19.9414 13.0498 19.9414 10.9293C19.9414 5.97057 15.9001 1.93125 10.9414 1.93125ZM10.9414 3.93128C14.8192 3.93128 17.9395 7.05148 17.9395 10.9293C17.9395 14.8071 14.8192 17.9352 10.9414 17.9352C7.06357 17.9352 3.94336 14.8071 3.94336 10.9293C3.94336 7.05148 7.06357 3.93128 10.9414 3.93128Z" fill="currentColor"></path>
                                     </svg>
                                 </button>
+                                <a href="{{route('client.index')}}">
+                                    <img src="/logo/logo_1.jpg" class="img_logo" alt="">
+                                </a>
                             </div>
                             <div class="w-2/6 pl-2 flex flex-wrap justify-center">
                                 <a href="{{route('login.index')}}">

@@ -110,7 +110,7 @@
                 @foreach ($categorys as $category)
                     @if (count($category->Product) > 0)
                         <div class="product_list w-4/5 mx-auto py-14">
-                            <div class="font-bold text-3xl pt-5 mx-auto text-center">
+                            <div class="font-bold text-3xl pt-5 pb-3 mx-auto text-center text-blue-600">
                                 {{$category->name}}
                             </div>
                             <div class="flex items-center justify-between flex-wrap grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2  gap-2">

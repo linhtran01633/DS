@@ -173,7 +173,7 @@ Alpine.start();
                                 <div class="w-2/12"> <img src="/storage/${element.product.image}" class="w-16 h-16"/></div>
                                 <div class="w-4/12"> ${element.product.name}</div>
                                 <div class="w-3/12"> ${convertToHalfFormat(element.product.price.toString())}</div>
-                                <div class="w-3/12"> SL <input type="number" data-price="${element.product.price}" name="quantity_product[]" class="quantity_product w-18 rounded-lg p-2" value="${element.quantity}" min="1" max="999"></div>
+                                <div class="w-3/12"> SL <input type="number" data-price="${element.product.price}" name="quantity_product[]" class="quantity_product sm:w-18 w-10 rounded-lg p-2" value="${element.quantity}" min="1" max="999"></div>
                                 <div><i class="fa-solid fa-trash text-blue-600 delete_product_card" data-id="${element.product.id}"></i></div>
                             </div>
                         `;

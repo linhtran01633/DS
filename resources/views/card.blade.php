@@ -10,7 +10,7 @@
                 <form action="{{route('client.invoice')}}" method="POST" id="form_submit_shopping_card">
                     @csrf
                     <div class="flex items-start justify-between flex-wrap">
-                        <div class="w-7/12 p-2">
+                        <div class="w-7/12 p-2" style="min-width:325px">
                             <div class="bg-white rounded-lg p-5">
                                 <div class="append_product_card">
 
@@ -70,7 +70,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-5/12 p-2">
+                        <div class="w-5/12 p-2"  style="min-width:325px">
                             <div class="bg-white rounded-lg p-5">
                                 <div class="w-full h-14 flex items-center bg-gray-200 rounded-xl px-2">
                                     <i class="fa-solid fa-tags text-blue-600"></i>

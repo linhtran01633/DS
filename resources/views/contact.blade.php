@@ -1,7 +1,7 @@
 @extends('layout_client')
 
 @section('content')
-<div class="text-2xl font-bold pb-3 text-center text-blue-600">VIỆT LANG PHARMACY</div>
+<div class="text-2xl font-bold pb-3 text-center text-blue-600">VIỆT CHÂU PHARMACY</div>
 
 <div class="w-4/5 mx-auto flex items-start justify-between flex-wrap grid md:grid-cols-3 grid-cols-1 gap-4 pb-8">
     <div>

@@ -1,7 +1,7 @@
 @extends('layout_client')
 
 @section('content')
-<div class="text-2xl font-bold pb-3 text-center">ĐĂNG NHẬP VÀO VIỆT LANG PHARMACY</div>
+<div class="text-2xl font-bold pb-3 text-center">ĐĂNG NHẬP VÀO VIỆT CHÂU PHARMACY</div>
 
 <div class="w-4/5 mx-auto flex items-start justify-between flex-wrap">
     <div class="mx-auto sm:w-6/12 w-9/12">

@@ -120,7 +120,7 @@
 
             <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
                 <footer class="w-full bg-white text-right p-4">
-                    Built by <a target="_blank" href="https://davidgrzyb.com" class="underline">VIỆT LANG PHARMACY</a>.
+                    Built by <a target="_blank" href="https://davidgrzyb.com" class="underline">VIỆT CHÂU PHARMACY</a>.
                 </footer>
             </div>
         </div>
