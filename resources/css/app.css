@@ -1,3 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-ds {
+    background-color: #1654bf;
+}
+
+.bt-ds {
+    color: white !important;
+    background-color: #1654bf;
+}
+
+.bt-ds:hover {
+    color: #1654bf !important;
+    border: 2px solid #1654bf;
+}
+
+.text-ds {
+    color: #1654bf;
+}
+.text-ds-hover:hover {
+    color: #1654bf;
+}
+
+.input-search:focus{
+    outline: 0;
+    border: 1px solid white;
+    box-shadow: 0 0 0 0 white;
+}
+
+.input_quanty {
+    appearance: none;
+    outline: none;
+    height: inherit;
+    width: 40px;
+    border: 1px solid #1654bf;
+    padding: 0px 3px;
+}
+
+@media screen and (max-device-width:480px){
+    .input-search {
+        font-size: 13px;
+        line-height: 18px;
+        height: 18px;
+    }
+
+    .span-padding-mobile {
+        padding: 0px 16px !important;
+    }
+}
+
+

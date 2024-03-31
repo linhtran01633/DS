@@ -1,33 +1,25 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-</head>
-<body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-        <div id="default-carousel" class="relative w-full" data-carousel="slide">
+@extends('layout_client')
+
+@section('carusel')
+    <section class="w-full py-4 " style="background: linear-gradient(rgb(246, 247, 251) 0%, rgb(236, 241, 248) 100%);">
+        <div id="default-carousel" class="relative w-10/12 mx-auto" data-carousel="slide">
             <!-- Carousel wrapper -->
             <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
                 <!-- Item 1 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="/images/1.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    <img src="/carousel/slide1.webp" class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
                 <!-- Item 2 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="/images/3.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    <img src="/carousel/slide2.webp" class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
                 <!-- Item 3 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="/images/2.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    <img src="/carousel/slide3.webp" class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
                 <!-- Item 4 -->
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="/images/1.jpg" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    <img src="/carousel/slide4.webp" class="absolute block w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                 </div>
             </div>
             <!-- Slider indicators -->
@@ -55,6 +47,116 @@
                 </span>
             </button>
         </div>
-  </h1>
-</body>
-</html>
+    </section>
+@endsection
+
+@section('content')
+    <section class="selling_products">
+        <div calss="w-full bg-red-50 relative" style="background: linear-gradient(rgb(246, 247, 251) 0%, rgba(89, 110, 147, 0.124) 100%);">
+
+            @if(count($best_sale) > 0)
+                <div class="font-bold text-3xl pt-5 mx-auto text-center">Sản Phẩm Bán Chạy</div>
+
+                <div class="product_list w-4/5 mx-auto py-14">
+                    <div class="flex items-center justify-between flex-wrap grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2  gap-2">
+                        @foreach ($best_sale as $item)
+                            <div class="p-1">
+                                <div class="wrap-product p-2 bg-white rounded-lg border-blue-600 hover:border">
+                                    <div class="product-des">
+                                        <img class="w-11/12 mx-auto" style="aspect-ratio: 4/5" src="{{ asset('/storage/'.$item->image) }}">
+                                        <div class="name-product h-[50px] font-bold">
+                                            {{$item->name}}
+                                        </div>
+                                        <div class="product-price-old">
+                                            <span class="price-sale">
+                                                Giá:
+                                                @if ($item->price > 0)
+                                                    {{number_format($item->price)}}VND
+                                                @else
+                                                    <span class="text-red-500">
+                                                        Liên hệ 09x.xxx.xxxx
+                                                    </span>
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <div class="w-fit rounded-xl bg-gray-200 px-2 p1-1 mt-2">
+                                            <p class="w-fit text-caption text-sm text-gray-500 line-clamp-2">
+                                                {{$item->quantity}}
+                                            </p>
+                                        </div>
+                                        <div class="flex items-center justify-center mt-3">
+                                            <button type="button" data-id="{{$item->id}}" class="detail_products ml-2 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                                                chi tiết
+                                            </button>
+
+
+                                            <button type="button" data-id="{{$item->id}}" class="add_cards ml-2 text-xl inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                                                <i class="fa-solid fa-cart-shopping"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+            <div class="">
+                {{-- <div class="font-bold text-3xl pt-5 mx-auto text-center">
+                    Sản Phẩm Theo Danh mục
+                </div> --}}
+
+                @foreach ($categorys as $category)
+                    @if (count($category->Product) > 0)
+                        <div class="product_list w-4/5 mx-auto py-14">
+                            <div class="font-bold text-3xl pt-5 mx-auto text-center">
+                                {{$category->name}}
+                            </div>
+                            <div class="flex items-center justify-between flex-wrap grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2  gap-2">
+                                @foreach ($category->Product as $item)
+                                    <div class="p-1">
+                                        <div class="wrap-product p-2 bg-white rounded-lg border-blue-600 hover:border">
+                                            <div class="product-des">
+                                                <img class="w-11/12 mx-auto" style="aspect-ratio: 4/5" src="{{ asset('/storage/'.$item->image) }}">
+                                                <div class="name-product h-[50px] font-bold">
+                                                    {{$item->name}}
+                                                </div>
+                                                <div class="product-price-old">
+                                                    <span class="price-sale">
+                                                        Giá:
+                                                        @if ($item->price > 0)
+                                                            {{number_format($item->price)}}VND
+                                                        @else
+                                                            <span class="text-red-500">
+                                                                Liên hệ 09x.xxx.xxxx
+                                                            </span>
+                                                        @endif
+                                                    </span>
+                                                </div>
+                                                <div class="w-fit rounded-xl bg-gray-200 px-2 p1-1 mt-2">
+                                                    <p class="w-fit text-caption text-sm text-gray-500 line-clamp-2">
+                                                        {{$item->quantity}}
+                                                    </p>
+                                                </div>
+                                                <div class="flex items-center justify-center mt-3">
+                                                    <button type="button" data-id="{{$item->id}}" class="detail_products ml-2 inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                                                        chi tiết
+                                                    </button>
+
+                                                    <button type="button" data-id="{{$item->id}}" class="add_cards ml-2 text-xl inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                                                        <i class="fa-solid fa-cart-shopping"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    </section>
+@endsection
