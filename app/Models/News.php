@@ -14,6 +14,7 @@ class News extends Model
     public $keyType = 'string';
     protected $fillable = [
         'title',
+        'image',
         'short_description',
         'detailed_description',
         'delete_flag',

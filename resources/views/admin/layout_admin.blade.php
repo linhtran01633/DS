@@ -129,9 +129,46 @@
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 
+
+        @if (Session::has('message'))
+            <input type="hidden" id="message_input" value="{{ Session::get('message') }}">
+
+            <script>
+                let text = $('#message_input').val();
+                let divThongBao = document.createElement('div');
+                divThongBao.textContent = text;
+                divThongBao.style.padding = '50px';
+                divThongBao.style.position = 'fixed';
+                divThongBao.style.backgroundColor = 'royalblue';
+                divThongBao.style.top = '30vh';
+                divThongBao.style.left = 'calc(50% - 200px)';
+                divThongBao.style.zIndex = '9999';
+                divThongBao.style.width = '400px';
+                divThongBao.style.textAlign = 'center';
+                divThongBao.style.borderRadius = '1rem';
+                divThongBao.style.color = 'white';
+
+                document.body.appendChild(divThongBao);
+
+                setTimeout(function() {
+                    // Ẩn hoặc xóa thông báo sau 3 giây
+                    document.body.removeChild(divThongBao)
+                }, 1000);
+            </script>
+
+            @php
+                Session::forget('message');
+            @endphp
+        @endif
+
     <script>
-        var deleteCategory = '{!! route('admin.category.delete') !!}';
+        var getNews = '{!! route('admin.news.detail') !!}';
+        var deleteNews = '{!! route('admin.news.delete') !!}';
+        var getProduct = '{!! route('admin.product.detail') !!}';
+        var updateInvoice = '{!! route('admin.invoice.edit') !!}';
         var deleteProduct = '{!! route('admin.product.delete') !!}';
+        var deleteCategory = '{!! route('admin.category.delete') !!}';
+        var getDetailInvoice = '{!! route('admin.invoice.detail') !!}';
     </script>
 </body>
 </html>

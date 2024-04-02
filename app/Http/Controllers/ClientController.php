@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Invoice;
+use App\Models\InvoiceDetail;
 use App\Models\Product;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -112,10 +116,35 @@ class ClientController extends Controller
 
     public function invoice(Request $request)
     {
-        try{
+        try {
+            DB::transaction(function() use ($request){
+                $amount = 0;
+                $curent_day = Carbon::now()->format('d-m-Y');
 
-        } catch(Exception $e) {
+                foreach($request->data as $item) {
+                    $amount += $item['price'] * $item['quantity_product'];
+                }
 
+                $new_invoice = new Invoice();
+                $data = $request->only($new_invoice->getFillable());
+                $data['amount'] = $amount;
+                $data['date'] = $curent_day;
+                $new_invoice->fill($data)->save();
+
+                $new_invoice_id = $new_invoice->getConnection()->getPdo()->lastInsertId();
+
+                foreach($request->data as $item) {
+                    $new_invoice_detail = new InvoiceDetail();
+                    $new_invoice_detail->amount = $item['price'];
+                    $new_invoice_detail->quanty = $item['quantity_product'];
+                    $new_invoice_detail->invoice_id = $new_invoice_id;
+                    $new_invoice_detail->product_id = $item['id_product'];
+                    $new_invoice_detail->save();
+                }
+            });
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return redirect()->back();
         }
         return redirect()->back();
     }

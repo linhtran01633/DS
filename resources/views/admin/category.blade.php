@@ -3,16 +3,6 @@
 @section('content')
     <main class="w-full flex-grow p-6 h-full">
         <section class="bg-white dark:bg-gray-900">
-            <div class="flex justify-center">
-                @if (Session::has('message'))
-                    <div class="text-red-600 pt-3">
-                        {{ Session::get('message') }}
-                        @php
-                            Session::forget('message');
-                        @endphp
-                    </div>
-                @endif
-            </div>
             <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
                 <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Thêm Mới Danh Mục</h2>
                 <form  action="{{route('admin.category.add')}}" method="POST" >
@@ -36,6 +26,28 @@
             <p class="text-xl pb-3 flex items-center">
                 <i class="fas fa-list mr-3"></i> Danh Sách Danh Mục
             </p>
+            <div class="flex justify-between my-2">
+                <div>
+                    @if (count($categorys) > 0)
+                        {{ $categorys->appends(array(
+                            'search_name' => old('search_name'),
+                        ))->links() }}
+                    @endif
+                </div>
+
+                <div>
+                    <form method="GET" action="{{ route('admin.news.index')}}" class="flex">
+                        <div class="sm:col-span-2">
+                            <input type="text" name="search_name"  value="{{old('search_name')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Tìm theo Tên danh mục...">
+                        </div>
+                        <div>
+                            <button type="submit" class="inline-flex items-center px-5 py-2.5 mx-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
+                                Tìm kiếm
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="bg-white overflow-auto">
                 <table class="min-w-full bg-white">
                     <thead class="bg-gray-800 text-white">
@@ -56,12 +68,12 @@
                                     <td class="w-1/12 text-left py-2 px-2">{{$index + 1}}</td>
                                     <td class="w-8/12 text-left py-2 px-2">{{$category->name}}</td>
                                     <td class="w-3/12 text-left py-2 px-2">
-                                        <button type="button" data-id="{{$category->id}}" data-name="{{$category->name}}" class="update_category focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-1 me-2 dark:focus:ring-yellow-900">
-                                            CẬP NHẬP
+                                        <button type="button" data-id="{{$category->id}}" data-name="{{$category->name}}" class="update_category focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-1 mr-1 dark:focus:ring-yellow-900">
+                                            Cập nhập
                                         </button>
 
-                                        <button type="button" data-id="{{$category->id}}" class="delete_category ml-1 focus:outline-none text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 me-2 dark:focus:ring-red-900">
-                                            XOÁ
+                                        <button type="button" data-id="{{$category->id}}" class="delete_category mt-1 focus:outline-none text-white bg-red-400 hover:bg-red-500 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-1 dark:focus:ring-red-900">
+                                            Xoá
                                         </button>
                                     </td>
                                 </tr>

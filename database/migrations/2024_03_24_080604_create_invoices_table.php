@@ -13,9 +13,20 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->integerIncrements('id');
-            $table->string('date')->nullable();
-            $table->decimal('amount', 15)->default(0)->nullable();
+            $table->string('date', 10)->nullable();
+            $table->string('name_from', 256)->nullable();
+            $table->string('phone_from', 15)->nullable();
+            $table->string('email_from', 256)->nullable();
+            $table->string('name_to', 256)->nullable();
+            $table->string('phone_to', 15)->nullable();
+            $table->string('name_city', 256)->nullable();
+            $table->string('name_district', 256)->nullable();
+            $table->string('name_ward', 256)->nullable();
+            $table->string('address_to', 512)->nullable();
+            $table->string('note_to', 512)->nullable();
+            $table->decimal('amount', 15,0)->default(0)->nullable();
             $table->integer('user_id')->nullable();
+            $table->smallInteger('invoice_flag')->default(0)->nullable();
             $table->smallInteger('delete_flag')->default(0)->nullable();
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->integerIncrements('id');
             $table->integer('invoice_id');
             $table->integer('product_id');
-            $table->decimal('amount', 15)->default(0)->nullable();
+            $table->decimal('amount', 15,0)->default(0)->nullable();
             $table->smallInteger('quanty')->default(0)->nullable();
             $table->smallInteger('delete_flag')->default(0)->nullable();
             $table->timestamps();

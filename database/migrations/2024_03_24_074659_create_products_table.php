@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('category_id');
             $table->string('name', 256)->nullable();
             $table->string('brand', 256)->nullable();
-            $table->decimal('price', 15)->default(0)->nullable();
+            $table->decimal('price', 15,0)->default(0)->nullable();
             $table->string('quantity', 256)->nullable();
             $table->string('image', 256)->nullable();
             $table->string('title', 256)->nullable();

@@ -53,24 +53,21 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/dashboard/categoryDelete', [AdminController::class, 'categoryDelete'])->name('admin.category.delete');
 
     Route::get('/admin/dashboard/product', [AdminController::class, 'productIndex'])->name('admin.product.index');
+    Route::get('/admin/dashboard/productDetail', [AdminController::class, 'productDetail'])->name('admin.product.detail');
     Route::post('/admin/dashboard/productAdd', [AdminController::class, 'productAdd'])->name('admin.product.add');
     Route::post('/admin/dashboard/productEdit', [AdminController::class, 'productEdit'])->name('admin.product.edit');
     Route::post('/admin/dashboard/productDelete', [AdminController::class, 'productDelete'])->name('admin.product.delete');
 
     Route::get('/admin/dashboard/news', [AdminController::class, 'newsIndex'])->name('admin.news.index');
+    Route::get('/admin/dashboard/newsDetail', [AdminController::class, 'newsDetail'])->name('admin.news.detail');
     Route::post('/admin/dashboard/newsAdd', [AdminController::class, 'newsAdd'])->name('admin.news.add');
     Route::post('/admin/dashboard/newsEdit', [AdminController::class, 'newsEdit'])->name('admin.news.edit');
     Route::post('/admin/dashboard/newsDelete', [AdminController::class, 'newsDelete'])->name('admin.news.delete');
 
-    Route::get('/admin/dashboard/card', [AdminController::class, 'cardIndex'])->name('admin.card.index');
-    Route::post('/admin/dashboard/cardAdd', [AdminController::class, 'cardAdd'])->name('admin.card.add');
-    Route::post('/admin/dashboard/cardEdit', [AdminController::class, 'cardEdit'])->name('admin.card.edit');
-    Route::post('/admin/dashboard/cardDelete', [AdminController::class, 'cardDelete'])->name('admin.card.delete');
-
     Route::get('/admin/dashboard/invoice', [AdminController::class, 'invoiceIndex'])->name('admin.invoice.index');
-    Route::post('/admin/dashboard/invoiceAdd', [AdminController::class, 'invoiceAdd'])->name('admin.invoice.add');
     Route::post('/admin/dashboard/invoiceEdit', [AdminController::class, 'invoiceEdit'])->name('admin.invoice.edit');
-    Route::post('/admin/dashboard/invoiceDelete', [AdminController::class, 'invoiceDelete'])->name('admin.invoice.delete');
+    Route::get('/admin/dashboard/invoiceDetail', [AdminController::class, 'invoiceDetail'])->name('admin.invoice.detail');
+
 
 
 
