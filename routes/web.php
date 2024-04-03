@@ -23,6 +23,7 @@ Route::get('/gới-thiệu', [ClientController::class, 'introduce'])->name('clie
 Route::get('/liên-hệ', [ClientController::class, 'contact'])->name('client.contact');
 Route::get('/giỏ-hàng', [ClientController::class, 'shoppingCard'])->name('client.shoppingCard');
 Route::get('/shopping_card', [ClientController::class, 'shopping_card'])->name('client.shopping_card');
+Route::get('/tin-tức', [ClientController::class, 'news'])->name('client.news');
 
 Route::post('/invoice', [ClientController::class, 'invoice'])->name('client.invoice');
 
@@ -68,7 +69,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/dashboard/invoiceEdit', [AdminController::class, 'invoiceEdit'])->name('admin.invoice.edit');
     Route::get('/admin/dashboard/invoiceDetail', [AdminController::class, 'invoiceDetail'])->name('admin.invoice.detail');
 
-
+    Route::get('/admin/dashboard/users', [AdminController::class, 'userIndex'])->name('admin.user.index');
+    Route::post('/admin/dashboard/usersAdd', [AdminController::class, 'userAdd'])->name('admin.user.add');
+    Route::post('/admin/dashboard/usersDelete', [AdminController::class, 'userDelete'])->name('admin.user.delete');
 
 
     Route::post('/logout_admin', [LoginController::class, 'logout_admin'])->name('logout_admin');

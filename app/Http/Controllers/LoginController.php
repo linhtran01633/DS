@@ -19,6 +19,7 @@ class LoginController extends Controller
         $credentials = [
             'email' => $request->email,
             'password' => $request->password,
+            'delete_flag' => 0,
         ];
 
 
@@ -26,7 +27,7 @@ class LoginController extends Controller
             return redirect()->route('admin.index');
         }
 
-        return back()->withInput()->withErrors(['status' => __('login is incorrect.')]);
+        return back()->with('message', 'Đăng nhập không thành công');
     }
 
     public function logout_admin(Request $request)

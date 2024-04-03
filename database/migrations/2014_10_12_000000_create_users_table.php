@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('address', 512)->nullable();
             $table->string('phone', 15)->nullable();
             $table->string('password', 512)->nullable();
+            $table->smallInteger('delete_flag')->default(0)->nullable();
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
+use App\Models\News;
 use App\Models\Product;
 use Carbon\Carbon;
 use Exception;
@@ -41,8 +42,7 @@ class ClientController extends Controller
                 'categorys' => $categorys,
             ]);
         } catch(Exception $e) {
-            dd($e->getMessage());
-            return view('welcome');
+            return view('page404');
         }
     }
 
@@ -147,5 +147,15 @@ class ClientController extends Controller
             return redirect()->back();
         }
         return redirect()->back();
+    }
+
+    public function news(Request $request)
+    {
+        try {
+            $news = News::where('delete_flag', 0)->orderBy('id', 'desc')->get();
+            return view('news')->with(['news'=> $news]);
+        } catch (Exception $e) {
+            return view('page404');
+        }
     }
 }

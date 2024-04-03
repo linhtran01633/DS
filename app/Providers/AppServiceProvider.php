@@ -22,9 +22,11 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        $hot_line = '09x.xxxx.xxx';
         $categorys_menu = Category::where('delete_flag', 0)->get();
 
-        View::composer('*', function ($view) use($categorys_menu){
+        View::composer('*', function ($view) use($categorys_menu, $hot_line){
+            $view->with('hot_line', $hot_line);
             $view->with('categorys_menu', $categorys_menu);
         });
     }

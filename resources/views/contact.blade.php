@@ -12,8 +12,8 @@
     </div>
     <div>
         <div class="text-xl font-bold pb-3">LIÊN HỆ</div>
-        <div class="">Diện thoại : 09x.xxxx.xxx</div>
-        <div class="">Email: vietlangpharmacy@gmail.com</div>
+        <div class="">Diện thoại : {{$hot_line}}</div>
+        <div class="">Email: vietchaupharmacy@gmail.com</div>
         <div class="">
             Dịa chỉ:  Số 525A Đường Lũy Bán Bích, Phường Phú Thạnh, Quận Tân Phú, Thành phố Hồ Chí Minh
         </div>
@@ -26,13 +26,13 @@
         <div class="text-xl font-bold pb-3">KẾT NỐI</div>
         <p>
             <strong>Email:</strong>
-            <a href="#" target="_blank" rel="noopener noreferrer">vietlangpharmacy@gmail.com</a>
+            <a href="#" target="_blank" rel="noopener noreferrer">vietchaupharmacy@gmail.com</a>
             <br>
             <strong>Facebook: </strong>
-            <a href="#" target="_blank" rel="noopener noreferrer nofollow">fb.com/VietLangPharmacy</a>
+            <a href="#" target="_blank" rel="noopener noreferrer nofollow">fb.com/vietchauPharmacy</a>
             <br>
             <strong>Shopee:</strong>
-            <a href="https://shopee.vn/nhathuocsongthu" target="_blank" rel="noopener noreferrer nofollow">nhathuocvietlang</a>
+            <a href="https://shopee.vn/nhathuocsongthu" target="_blank" rel="noopener noreferrer nofollow">nhathuocvietchau</a>
             <br>
             <strong>Zalo:</strong>
             <a href="https://zalo.me/0907239579" rel="nofollow noopener" target="_blank">0907239579</a> – <a href="https://zalo.me/0934567876" rel="nofollow noopener" target="_blank">0934567876</a>

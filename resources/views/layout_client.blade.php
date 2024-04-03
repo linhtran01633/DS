@@ -25,6 +25,13 @@
             position: absolute;
             border-radius: 50%;
         }
+
+        .title-news {
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 5;
+            -webkit-box-orient: vertical;
+        }
     </style>
 </head>
 <body>
@@ -123,7 +130,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
+                                <a href="{{route('client.news')}}" class="block py-2 px-3 text-gray-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">
                                     Tin Tức
                                 </a>
                             </li>
@@ -151,8 +158,8 @@
         <div class="w-4/5 mx-auto flex items-start justify-between flex-wrap grid md:grid-cols-3 grid-cols-1 gap-2">
             <div>
                 <div class="text-2xl font-bold pb-3">LIÊN HỆ</div>
-                <div class="">Diện thoại : 09x.xxxx.xxx</div>
-                <div class="">Email: vietlangpharmacy@gmail.com</div>
+                <div class="">Diện thoại : {{$hot_line}}</div>
+                <div class="">Email: vietchaupharmacy@gmail.com</div>
                 <div class="">
                     Dịa chỉ:  Số 525A Đường Lũy Bán Bích, Phường Phú Thạnh, Quận Tân Phú, Thành phố Hồ Chí Minh
                 </div>
@@ -186,6 +193,37 @@
             </div>
         </div>
     </footer>
+
+    @if (Session::has('message'))
+        <input type="hidden" id="message_input" value="{{ Session::get('message') }}">
+
+        <script>
+            let text = $('#message_input').val();
+            let divThongBao = document.createElement('div');
+            divThongBao.textContent = text;
+            divThongBao.style.padding = '50px';
+            divThongBao.style.position = 'fixed';
+            divThongBao.style.backgroundColor = 'royalblue';
+            divThongBao.style.top = '30vh';
+            divThongBao.style.left = 'calc(50% - 200px)';
+            divThongBao.style.zIndex = '9999';
+            divThongBao.style.width = '400px';
+            divThongBao.style.textAlign = 'center';
+            divThongBao.style.borderRadius = '1rem';
+            divThongBao.style.color = 'white';
+
+            document.body.appendChild(divThongBao);
+
+            setTimeout(function() {
+                // Ẩn hoặc xóa thông báo sau 3 giây
+                document.body.removeChild(divThongBao)
+            }, 1000);
+        </script>
+
+        @php
+            Session::forget('message');
+        @endphp
+    @endif
 
     <script>
         var getShoppingCard = '{!! route('client.shopping_card') !!}';

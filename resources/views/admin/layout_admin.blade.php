@@ -55,7 +55,12 @@
                 Quản Lý Hoá Đơn
             </a>
 
-            <a href="{{route('client.index')}}" class="@if(isset($page_current) && $page_current == 'user') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
+            <a href="{{route('admin.user.index')}}" class="@if(isset($page_current) && $page_current == 'user') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Quản Lý Users
+            </a>
+
+            <a href="{{route('client.index')}}" class="flex items-center text-white py-4 pl-4 nav-item">
                 <i class="fas fa-table mr-3"></i>
                 Quay Về Trang Người Dùng
             </a>
@@ -94,23 +99,44 @@
 
                 <!-- Dropdown Nav -->
                 <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
-                    <a href="{{route('admin.index')}}" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                    <a href="{{route('admin.index')}}" class="@if(isset($page_current) && $page_current == 'home') active-nav-link @endif flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                         <i class="fas fa-tachometer-alt mr-3"></i>
-                        Dashboard
+                        Trang chủ
                     </a>
-                    <a href="tables.html" class="flex items-center  text-white py-2 pl-4 nav-item">
+                    <a href="{{route('admin.category.index')}}" class="@if(isset($page_current) && $page_current == 'category') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
                         <i class="fas fa-table mr-3"></i>
-                        Tables
+                        Quản Lý Danh Mục
                     </a>
 
-                    <a href="{{route('admin.category.index')}}" class="flex items-center text-white py-2 pl-4 nav-item">
+                    <a href="{{route('admin.product.index')}}" class="@if(isset($page_current) && $page_current == 'product') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
                         <i class="fas fa-table mr-3"></i>
-                        Danh Mục
+                        Quản Lý Sản Phẩm
                     </a>
-                    <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
-                        <i class="fas fa-sign-out-alt mr-3"></i>
-                        Sign Out
+
+                    <a href="{{route('admin.news.index')}}" class="@if(isset($page_current) && $page_current == 'news') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
+                        <i class="fas fa-table mr-3"></i>
+                        Quản Lý Tin Tức
                     </a>
+
+                    <a href="{{route('admin.invoice.index')}}" class="@if(isset($page_current) && $page_current == 'invoice') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
+                        <i class="fas fa-table mr-3"></i>
+                        Quản Lý Hoá Đơn
+                    </a>
+
+                    <a href="{{route('admin.user.index')}}" class="@if(isset($page_current) && $page_current == 'user') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
+                        <i class="fas fa-table mr-3"></i>
+                        Quản Lý Users
+                    </a>
+
+                    <a href="{{route('client.index')}}" class="flex items-center text-white py-4 pl-4 nav-item">
+                        <i class="fas fa-table mr-3"></i>
+                        Quay Về Trang Người Dùng
+                    </a>
+
+                    <form action="{{ route('logout_admin') }}" method="post">
+                        @csrf
+                        <button type="submit" class="w-11/12 mx-auto rounded-lg block px-4 py-2 account-link hover:text-white">Đăng xuất</button>
+                    </form>
                 </nav>
             </header>
 
@@ -163,12 +189,15 @@
 
     <script>
         var getNews = '{!! route('admin.news.detail') !!}';
+        var deleteUser = '{!! route('admin.user.delete') !!}';
         var deleteNews = '{!! route('admin.news.delete') !!}';
         var getProduct = '{!! route('admin.product.detail') !!}';
         var updateInvoice = '{!! route('admin.invoice.edit') !!}';
         var deleteProduct = '{!! route('admin.product.delete') !!}';
         var deleteCategory = '{!! route('admin.category.delete') !!}';
         var getDetailInvoice = '{!! route('admin.invoice.detail') !!}';
+
+
     </script>
 </body>
 </html>

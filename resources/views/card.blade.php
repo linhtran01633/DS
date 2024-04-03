@@ -101,7 +101,7 @@
                                 <div class="border-b my-3"></div>
                                 <div>
                                     <p class="text-red-600 text-2xl font-bold">Hỗ trợ mua hàng</p>
-                                    <p class="text-blue-600 text-2xl font-bold">Hotline:09x.xxx.xxxx</p>
+                                    <p class="text-blue-600 text-2xl font-bold">Hotline:{{$hot_line}}</p>
                                     <p>(Bán hàng cả Thứ 7 và Chủ nhật)</p>
                                 </div>
                             </div>

@@ -34,9 +34,9 @@
             <p>&nbsp;</p>
             <p><strong>Địa chỉ:</strong> Số 525A Đường Lũy Bán Bích, Phường Phú Thạnh, Quận Tân Phú, Thành phố Hồ Chí Minh</p>
             <p><strong>Sđt: </strong>09x xxxxxx – 09x xxxxxx</p>
-            <p><strong>Email:</strong> vietlangpharmacy@gmail.com</p>
-            <p><strong>Website:</strong> www.vietlangpharmacy.com‬‬</p>
-            <p><strong>Facbook:</strong> https://www.facebook.com/VietLangPharmacy</p>
+            <p><strong>Email:</strong> vietchaupharmacy@gmail.com</p>
+            <p><strong>Website:</strong> www.vietchaupharmacy.com‬‬</p>
+            <p><strong>Facbook:</strong> https://www.facebook.com/vietchauPharmacy</p>
             <p class="pb-5 text-center"><em><strong>Rất hân hạnh được phục vụ quý khách!</strong></em></p>
         </div>
     </div>

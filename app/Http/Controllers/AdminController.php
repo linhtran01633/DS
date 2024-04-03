@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\News;
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -399,4 +400,57 @@ class AdminController extends Controller
 
         }
     // kết thúc khu vực hoá đơn
+
+    // khu vực sử lý user
+        public function userIndex(Request $request)
+        {
+            try {
+                $page_current = 'user';
+                $users = User::where('id', '!=', 1);
+
+                if($request->search_user) $users = $users->where('name','LIKE', '%'.$request->search_user .'%');
+
+                $users = $users->paginate(10);
+                $request->flash();
+                return view('admin.user')->with([
+                    'users' => $users,
+                    'page_current' => $page_current,
+                ]);
+            } catch (Exception $e) {
+                return view('page404');
+            }
+        }
+
+        public function userAdd(Request $request)
+        {
+            try {
+                DB::transaction(function () use ($request) {
+                    $new_user = new User();
+                    $data = $request->only($new_user->getFillable());
+                    $new_user->fill($data)->save();
+                });
+            } catch (Exception $e) {
+                Log::info($e->getMessage());
+                return Redirect::route('admin.user.index')->with('message', 'Đăng kí không thành công');
+            }
+            return Redirect::route('admin.user.index')->with('message', 'Đăng kí thành công');
+        }
+
+        public function userDelete(Request $request)
+        {
+            try {
+                DB::transaction(function () use ($request) {
+                    User::where('id', $request->id)
+                    ->update([
+                        'delete_flag' => 1
+                    ]);
+                });
+            } catch (Exception $e) {
+                Log::info($e->getMessage());
+                return response()->json('Xoá không thành công', 500, [], JSON_UNESCAPED_UNICODE);
+            }
+
+            return response()->json('Xoá thành công', 200, [], JSON_UNESCAPED_UNICODE);
+        }
+    // kết thúc khu vực user
 }

@@ -155,6 +155,32 @@ Alpine.start();
 
 // kết thúc 1 khu vực
 
+    $('.delete_users').on('click', function(e) {
+        let button = $(this);
+        button.attr('disabled', true);
+
+        let id = $(this).data('id');
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: deleteUser,
+            data: { id: id },
+            type: "POST",
+            success: function(result) {
+                button.parent().parent().remove();
+                thongbao('Xoá thành công');
+                button.attr('disabled', false);
+            },
+            error: function(error) {
+                console.log(error);
+                thongbao('Xoá không thành công');
+                button.attr('disabled', false);
+            },
+        });
+    });
+
 // khu vực sử lý dành cho news
 
     $('.open_sesion_add_news').on('click', function(e){
