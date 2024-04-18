@@ -57,14 +57,14 @@
             @if(count($best_sale) > 0)
                 <div class="font-bold text-3xl pt-5 mx-auto text-center">Sản Phẩm Bán Chạy</div>
 
-                <div class="product_list w-4/5 mx-auto py-14">
+                <div class="product_list sm:w-4/5 w-11/12 mx-auto py-14">
                     <div class="flex items-center justify-between flex-wrap grid lg:grid-cols-5 md:grid-cols-3 grid-cols-2  gap-2">
                         @foreach ($best_sale as $item)
                             <div class="p-1">
                                 <div class="wrap-product p-2 bg-white rounded-lg border-blue-600 hover:border">
                                     <div class="product-des">
                                         <img class="w-11/12 mx-auto" style="aspect-ratio: 4/5" src="{{ asset('/storage/'.$item->image) }}">
-                                        <div class="name-product h-[50px] font-bold">
+                                        <div class="name-product h_50px font-bold">
                                             {{$item->name}}
                                         </div>
                                         <div class="product-price-old">
@@ -79,7 +79,7 @@
                                                 @endif
                                             </span>
                                         </div>
-                                        <div class="w-fit rounded-xl bg-gray-200 px-2 p1-1 mt-2">
+                                        <div class="w-fit rounded-xl bg-gray-200 px-2 p1-1 mt-2 inline-flex">
                                             <p class="w-fit text-caption text-sm text-gray-500 line-clamp-2">
                                                 {{$item->quantity}}
                                             </p>
@@ -109,7 +109,7 @@
 
                 @foreach ($categorys as $category)
                     @if (count($category->Product) > 0)
-                        <div class="product_list w-4/5 mx-auto py-14">
+                        <div class="product_list sm:w-4/5 w-11/12 mx-auto py-14">
                             <div class="font-bold text-3xl pt-5 pb-3 mx-auto text-center text-blue-600">
                                 {{$category->name}}
                             </div>
@@ -119,7 +119,7 @@
                                         <div class="wrap-product p-2 bg-white rounded-lg border-blue-600 hover:border">
                                             <div class="product-des">
                                                 <img class="w-11/12 mx-auto" style="aspect-ratio: 4/5" src="{{ asset('/storage/'.$item->image) }}">
-                                                <div class="name-product h-[50px] font-bold">
+                                                <div class="name-product h_50px font-bold">
                                                     {{$item->name}}
                                                 </div>
                                                 <div class="product-price-old">
@@ -134,7 +134,7 @@
                                                         @endif
                                                     </span>
                                                 </div>
-                                                <div class="w-fit rounded-xl bg-gray-200 px-2 p1-1 mt-2">
+                                                <div class="w-fit rounded-xl bg-gray-200 px-2 p1-1 mt-2 inline-flex">
                                                     <p class="w-fit text-caption text-sm text-gray-500 line-clamp-2">
                                                         {{$item->quantity}}
                                                     </p>

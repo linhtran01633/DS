@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tailwind Admin Template</title>
+    <title>Admin Việt Châu</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content="David Grzyb">
     <meta name="description" content="">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <!-- Tailwind -->
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
         .font-family-karla { font-family: karla; }
@@ -72,13 +71,12 @@
             <!-- Desktop Header -->
             <header class="w-full items-center bg-white py-2 px-6 hidden sm:flex">
                 <div class="w-1/2"></div>
-                <div x-data="{ isOpen: false }" class="relative w-1/2 flex justify-end">
-                    <button @click="isOpen = !isOpen" class="realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
+                <div class="relative w-1/2 flex justify-end">
+                    <button class="show_button_logout realtive z-10 w-12 h-12 rounded-full overflow-hidden border-4 border-gray-400 hover:border-gray-300 focus:border-gray-300 focus:outline-none">
                         <img src="{{ asset('/images/img_avatar.png') }}">
-
                     </button>
-                    <button x-show="isOpen" @click="isOpen = false" class="h-full w-full fixed inset-0 cursor-default"></button>
-                    <div x-show="isOpen" class="absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
+                    <button class="div_show_logout h-full hidden w-full fixed inset-0 cursor-default"></button>
+                    <div class="div_show_logout hidden absolute w-32 bg-white rounded-lg shadow-lg py-2 mt-16">
                         <form action="{{ route('logout_admin') }}" method="post">
                             @csrf
                             <button type="submit" class="w-11/12 mx-auto rounded-lg block px-4 py-2 account-link hover:text-white">Đăng xuất</button>
@@ -88,17 +86,17 @@
             </header>
 
             <!-- Mobile Header & Nav -->
-            <header x-data="{ isOpen: false }" class="w-full bg-sidebar py-5 px-6 sm:hidden">
+            <header class="w-full bg-sidebar py-5 px-6 sm:hidden">
                 <div class="flex items-center justify-between">
                     <a href="{{route('admin.index')}}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
-                    <button @click="isOpen = !isOpen" class="text-white text-3xl focus:outline-none">
-                        <i x-show="!isOpen" class="fas fa-bars"></i>
-                        <i x-show="isOpen" class="fas fa-times"></i>
+                    <button class="text-white text-3xl focus:outline-none show_button_menu">
+                        <i class="div_show_menu fas fa-bars"></i>
+                        <i class="div_off_menu hidden fas fa-times"></i>
                     </button>
                 </div>
 
                 <!-- Dropdown Nav -->
-                <nav :class="isOpen ? 'flex': 'hidden'" class="flex flex-col pt-4">
+                <nav class="show_menu_admin hidden flex flex-col pt-4">
                     <a href="{{route('admin.index')}}" class="@if(isset($page_current) && $page_current == 'home') active-nav-link @endif flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                         <i class="fas fa-tachometer-alt mr-3"></i>
                         Trang chủ
@@ -197,7 +195,27 @@
         var deleteCategory = '{!! route('admin.category.delete') !!}';
         var getDetailInvoice = '{!! route('admin.invoice.detail') !!}';
 
+        $('.show_button_logout').on('click', function(e){
+            if ($('.div_show_logout').hasClass("hidden")) {
+                $('.div_show_logout').removeClass('hidden');
+            } else {
+                $('.div_show_logout').addClass('hidden');
+            }
+        })
 
+        $('.show_button_menu').on('click', function(e){
+            console.log('123');
+            if ($('.div_off_menu').hasClass("hidden")) {
+                $('.div_show_menu').addClass('hidden');
+                $('.div_off_menu').removeClass('hidden');
+                $('.show_menu_admin').removeClass('hidden');
+            } else {
+                $('.div_show_menu').removeClass('hidden');
+                $('.div_off_menu').addClass('hidden');
+                $('.show_menu_admin').addClass('hidden');
+            }
+        })
     </script>
+    <script src="{{ URL::asset('js/main.js') }}"></script>
 </body>
 </html>

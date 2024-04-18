@@ -7,8 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"  rel="stylesheet" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
         .name-product {
             overflow: hidden;
@@ -32,13 +31,75 @@
             -webkit-line-clamp: 5;
             -webkit-box-orient: vertical;
         }
+
+        .bg_2167dd {
+            --tw-bg-opacity: 1;
+            background-color: rgb(33 103 221 / var(--tw-bg-opacity));
+        }
+
+        .z_1 {
+            z-index: -1;
+        }
+
+        .h_36px {
+            height: 36px;
+        }
+
+		@media (min-width: 768px) {
+			.w_750px {
+				width: 750px;
+			}
+		}
+
+        .rounded_35px {
+            border-radius: 35px;
+        }
+
+        .p_6px {
+            padding: 6px;
+        }
+
+        .h_40px {
+            height: 40px;
+        }
+
+        .h_50px {
+            height: 50px;
+        }
+
+        .w_40px {
+            width: 40px;
+        }
+
+        .p_10px {
+            padding: 10px
+        }
+
+        .px_7px {
+            padding-left:7px;
+            padding-right:7px;
+        }
+
+        .py_1px {
+            padding-top:1px;
+            padding-bottom:1px;
+        }
+        .text_8px {
+            font-size: 8px;
+        }
+
+        .detail_products {
+            min-width: 84px;
+        }
+
+
     </style>
 </head>
 <body>
-    <header class="sticky top-0 z-50 bg-[#2167dd] transition-[height] md:relative css-33afvg">
+    <header class="sticky top-0 z-50 bg_2167dd transition-[height] md:relative css-33afvg">
         <div class="inner relative css-0">
             <div class="relative md:static py-8">
-                <picture class="absolute top-0 left-0 h-full w-full z-[-1]">
+                <picture class="absolute top-0 left-0 h-full w-full z_1">
                     <source media="(min-width: 769px)" type="image/webp" srcset="https://cdn.nhathuoclongchau.com.vn/unsafe/0x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/Desk_5a13cc1228.png">
                     <source media="(max-width: 768px)" type="image/webp" srcset="https://cdn.nhathuoclongchau.com.vn/unsafe/0x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/Res_be8c5ee754.png">
                     <img alt="bg-section-banner" decoding="async" data-nimg="fill" class="h-full w-full object-cover" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/w8AAwAB/31/3KwAAAAASUVORK5CYII=" style="position: absolute; height: 100%; width: 100%; inset: 0px; color: transparent;">
@@ -46,12 +107,12 @@
                 <div class="container md:container h-[100%] md:relative md:h-[auto] css-1zrptk">
                     <div></div>
                 </div>
-                <div class="search-section col-span-full mt-1.5 grid h-[36px] content-center transition-[margin] md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-2 md:mx-auto md:mt-0 md:h-auto md:w-[750px]">
+                <div class="search-section col-span-full mt-1.5 grid content-center transition-[margin] md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-2 md:mx-auto md:mt-0 md:h-auto w_750px">
                     <div class="cs-search-wrapper relative">
                         <div class="flex flex-wrap items-center mx-auto sm:w-full w-11/12">
-                            <div class="w-4/6 relative inline-flex items-center bg-white rounded-[35px] p-[6px] pl-4 span-padding-mobile">
-                                <input id="search_header" placeholder="Tìm tên thuốc, bệnh lý, thực phẩm chức năng..." autocomplete="off" class="w-full h-[40px]  border-0 focus:outline-none input-search" value="" style="">
-                                <button class="shrink-0 rounded-full bg-layer-blue-1,5 text-text-focus w-[40px] h-[40px] p-[10px] ml-3">
+                            <div class="w-4/6 relative inline-flex items-center bg-white rounded_35px p_6px pl-4 span-padding-mobile">
+                                <input id="search_header" placeholder="Tìm tên thuốc, bệnh lý, thực phẩm chức năng..." autocomplete="off" class="w-full h_40px  border-0 focus:outline-none input-search" value="" style="">
+                                <button class="shrink-0 rounded-full bg-layer-blue-1,5 text-text-focus w_40px h_40px p_10px ml-3">
                                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.9414 1.93125C5.98269 1.93125 1.94336 5.97057 1.94336 10.9293C1.94336 15.888 5.98269 19.9352 10.9414 19.9352C13.0594 19.9352 15.0074 19.193 16.5469 17.9606L20.2949 21.7066C20.4841 21.888 20.7367 21.988 20.9987 21.9853C21.2607 21.9826 21.5112 21.8775 21.6966 21.6923C21.882 21.5072 21.9875 21.2569 21.9906 20.9949C21.9936 20.7329 21.8939 20.4801 21.7129 20.2907L17.9648 16.5427C19.1983 15.0008 19.9414 13.0498 19.9414 10.9293C19.9414 5.97057 15.9001 1.93125 10.9414 1.93125ZM10.9414 3.93128C14.8192 3.93128 17.9395 7.05148 17.9395 10.9293C17.9395 14.8071 14.8192 17.9352 10.9414 17.9352C7.06357 17.9352 3.94336 14.8071 3.94336 10.9293C3.94336 7.05148 7.06357 3.93128 10.9414 3.93128Z" fill="currentColor"></path>
                                     </svg>
@@ -72,7 +133,7 @@
                                     <button type="button" class="relative mx-2 text-xs inline-flex items-center px-2 py-2.5 text-sm font-medium text-center text-white rounded-lg sm:bg-transparent bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300">
                                         <i class="fa-solid fa-cart-shopping"></i>
                                         <span class="sm:block hidden"> giỏ hàng</span>
-                                        <span class="count_cards px-[7px] py-[1px] bg-yellow-500 left-1 -top-2 absolute text-[8px] text-white rounded-full"></span>
+                                        <span class="count_cards px_7px py_1px bg-yellow-500 left-1 -top-2 absolute text_8px text-white rounded-full"></span>
                                     </button>
                                 </a>
                             </div>
@@ -228,6 +289,7 @@
     <script>
         var getShoppingCard = '{!! route('client.shopping_card') !!}';
     </script>
+    <script src="{{ URL::asset('js/main.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 </body>
 </html>
