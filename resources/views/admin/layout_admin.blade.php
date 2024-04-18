@@ -27,7 +27,11 @@
 
     <aside class="fixed bg-sidebar h-screen w-64 hidden sm:block shadow-xl">
         <div class="p-6">
-            <a href="{{route('admin.index')}}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+            <a href="{{route('admin.index')}}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">
+                @if(Auth::check())
+                    {{Auth::user()->name}}
+                @endif
+            </a>
         </div>
         <nav class="text-white text-base font-semibold pt-3">
             <a href="{{route('admin.index')}}" class="@if(isset($page_current) && $page_current == 'home') active-nav-link @endif flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
@@ -88,7 +92,11 @@
             <!-- Mobile Header & Nav -->
             <header class="w-full bg-sidebar py-5 px-6 sm:hidden">
                 <div class="flex items-center justify-between">
-                    <a href="{{route('admin.index')}}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin</a>
+                    <a href="{{route('admin.index')}}" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">
+                        @if(Auth::check())
+                            {{Auth::user()->name}}
+                        @endif
+                    </a>
                     <button class="text-white text-3xl focus:outline-none show_button_menu">
                         <i class="div_show_menu fas fa-bars"></i>
                         <i class="div_off_menu hidden fas fa-times"></i>
