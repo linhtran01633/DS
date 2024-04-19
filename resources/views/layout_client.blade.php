@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <title>Nhà Thuốc Việt Châu</title>
     <meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
@@ -84,6 +85,7 @@
             padding-top:1px;
             padding-bottom:1px;
         }
+
         .text_8px {
             font-size: 8px;
         }
@@ -92,7 +94,9 @@
             min-width: 84px;
         }
 
-
+        .wrap-product:hover{
+            border: 1px solid #2167dd;
+        }
     </style>
 </head>
 <body>
@@ -111,7 +115,7 @@
                     <div class="cs-search-wrapper relative">
                         <div class="flex flex-wrap items-center mx-auto sm:w-full w-11/12">
                             <div class="w-4/6 relative inline-flex items-center bg-white rounded_35px p_6px pl-4 span-padding-mobile">
-                                <input id="search_header" placeholder="Tìm tên thuốc, bệnh lý, thực phẩm chức năng..." autocomplete="off" class="w-full h_40px  border-0 focus:outline-none input-search" value="" style="">
+                                <input id="search_header" placeholder="Tìm tên thuốc, bệnh lý, thực phẩm chức năng..." autocomplete="off" class="w-full ml-4 h_40px  border-0 focus:outline-none input-search" value="" style="">
                                 <button class="shrink-0 rounded-full bg-layer-blue-1,5 text-text-focus w_40px h_40px p_10px ml-3">
                                     <svg width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M10.9414 1.93125C5.98269 1.93125 1.94336 5.97057 1.94336 10.9293C1.94336 15.888 5.98269 19.9352 10.9414 19.9352C13.0594 19.9352 15.0074 19.193 16.5469 17.9606L20.2949 21.7066C20.4841 21.888 20.7367 21.988 20.9987 21.9853C21.2607 21.9826 21.5112 21.8775 21.6966 21.6923C21.882 21.5072 21.9875 21.2569 21.9906 20.9949C21.9936 20.7329 21.8939 20.4801 21.7129 20.2907L17.9648 16.5427C19.1983 15.0008 19.9414 13.0498 19.9414 10.9293C19.9414 5.97057 15.9001 1.93125 10.9414 1.93125ZM10.9414 3.93128C14.8192 3.93128 17.9395 7.05148 17.9395 10.9293C17.9395 14.8071 14.8192 17.9352 10.9414 17.9352C7.06357 17.9352 3.94336 14.8071 3.94336 10.9293C3.94336 7.05148 7.06357 3.93128 10.9414 3.93128Z" fill="currentColor"></path>
@@ -219,12 +223,12 @@
         <div class="w-4/5 mx-auto flex items-start justify-between flex-wrap grid md:grid-cols-3 grid-cols-1 gap-2">
             <div>
                 <div class="text-2xl font-bold pb-3">LIÊN HỆ</div>
-                <div class="">Diện thoại : {{$hot_line}}</div>
-                <div class="">Email: vietchaupharmacy@gmail.com</div>
+                <div class="">Điện thoại : {{$hot_line}}</div>
+                <div class="">Email: ntvietchau@gmail.com</div>
                 <div class="">
-                    Dịa chỉ:  Số 525A Đường Lũy Bán Bích, Phường Phú Thạnh, Quận Tân Phú, Thành phố Hồ Chí Minh
+                    Địa chỉ:  Số 525A Đường Lũy Bán Bích, Phường Phú Thạnh, Quận Tân Phú, Thành phố Hồ Chí Minh
                 </div>
-                <div class="">Giờ làm việc: 6h30-21h Thứ 2-CN (Không nghỉ lễ)</div>
+                <div class="">Giờ làm việc: 6h15-22h00 Thứ 2-CN</div>
             </div>
 
             <div>

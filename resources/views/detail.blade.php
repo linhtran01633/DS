@@ -32,11 +32,11 @@
                         </div>
 
                         <div class="py-3">
-                            Danh mục {{$product_detail->Category->name}}
+                            Danh mục : {{$product_detail->Category->name}}
                         </div>
 
                         <div class="py-3">
-                            Mô tả ngắn {{$product_detail->title}}
+                            Mô tả ngắn : {{$product_detail->title}}
                         </div>
 
                         <div class="py-3">
@@ -65,7 +65,7 @@
                         Mô tả sản phẩm
                     </div>
                     <p class="pl-2">
-                        {{$product_detail->title_detail}}
+                        {!! nl2br($product_detail->title_detail) !!}
                     </p>
                 </div>
             </div>
