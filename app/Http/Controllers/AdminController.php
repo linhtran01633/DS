@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\DrugUnit;
+use App\Models\Generic;
 use App\Models\ImageProduct;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
@@ -453,4 +455,125 @@ class AdminController extends Controller
             return response()->json('Xoá thành công', 200, [], JSON_UNESCAPED_UNICODE);
         }
     // kết thúc khu vực user
+
+    // khu vực quản lý clinic
+
+        public function clinicIndex(Request $request)
+        {
+            try {
+                $generic = Generic::select( 'id','name')->where('status', 0)->get();
+                $drugUnit = DrugUnit::select( 'id','name')->where('status', 0)->get();
+                return view('admin.clinic')->with(['generic' => $generic, 'drugUnit' => $drugUnit]);
+            } catch(Exception $e) {
+                return view('admin.page_404');
+            }
+        }
+
+
+        public function addGeneric(Request $request)
+        {
+            try {
+               DB::transaction(function () use ($request) {
+                    $new_news = new Generic();
+                    $new_news->name = $request->name;
+                    $new_news->save();
+               });
+            } catch(Exception $e) {
+                return Redirect::route('admin.clinic.index', ['tab' => 3])->with('message', 'Đăng kí không thành công');
+            }
+
+            return Redirect::route('admin.clinic.index', ['tab' => 3])->with('message', 'Đăng kí thành công');
+        }
+
+        public function addDrugUnit(Request $request)
+        {
+            try {
+               DB::transaction(function () use ($request) {
+                    $new_news = new DrugUnit();
+                    $new_news->name = $request->name;
+                    $new_news->save();
+               });
+            } catch(Exception $e) {
+                return Redirect::route('admin.clinic.index', ['tab' => 4])->with('message', 'Đăng kí không thành công');
+            }
+
+            return Redirect::route('admin.clinic.index', ['tab' => 4])->with('message', 'Đăng kí thành công');
+        }
+
+        public function dropdownGeneric(Request $request)
+        {
+            try {
+                $resultCount = 50;
+                $page = $request->page;
+                $offset = ($page - 1) * $resultCount;
+
+                $CountResults   = Generic::where('status', 0);
+                $results = Generic::select(
+                    'id',
+                    'name',
+                )->where('status', 0);
+
+                if($request->term) {
+                        $results = $results->where('name', 'LIKE', '%' . $request->term . '%');
+                        $CountResults = $CountResults->where('name', 'LIKE', '%' . $request->term . '%');
+                }
+
+                $CountResults = $CountResults->count();
+                $results = $results->skip($offset)->take($resultCount)->get();
+
+
+                $count = $CountResults;
+                $endCount = $offset + $resultCount;
+                $morePages = $endCount < $count;
+
+
+                $results = [
+                    "results" => $results,
+                    "pagination" => array("more" => $morePages)
+                ];
+
+                return response()->json($results, 200, [], JSON_UNESCAPED_UNICODE);
+            } catch (Exception $e) {
+                return response()->json($e->getMessage(), 500, [], JSON_UNESCAPED_UNICODE);
+            }
+        }
+
+        public function dropdownDrugUnit(Request $request)
+        {
+            try {
+                $resultCount = 50;
+                $page = $request->page;
+                $offset = ($page - 1) * $resultCount;
+
+                $CountResults   = Generic::where('status', 0);
+                $results = Generic::select(
+                    'id',
+                    'name',
+                )->where('status', 0);
+
+                if($request->term) {
+                        $results = $results->where('name', 'LIKE', '%' . $request->term . '%');
+                        $CountResults = $CountResults->where('name', 'LIKE', '%' . $request->term . '%');
+                }
+
+                $CountResults = $CountResults->count();
+                $results = $results->skip($offset)->take($resultCount)->get();
+
+
+                $count = $CountResults;
+                $endCount = $offset + $resultCount;
+                $morePages = $endCount < $count;
+
+
+                $results = [
+                    "results" => $results,
+                    "pagination" => array("more" => $morePages)
+                ];
+
+                return response()->json($results, 200, [], JSON_UNESCAPED_UNICODE);
+            } catch (Exception $e) {
+                return response()->json($e->getMessage(), 500, [], JSON_UNESCAPED_UNICODE);
+            }
+        }
+    // kết thúc khu vực clinic
 }

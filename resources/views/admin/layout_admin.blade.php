@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="author" content="David Grzyb">
     <meta name="description" content="">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <!-- Tailwind -->
     <style>
@@ -20,8 +21,14 @@
         .nav-item:hover { background: #1947ee; }
         .account-link:hover { background: #3d68ff; }
     </style>
+    <script src="{{ URL::asset('js/jquery-3.5.1.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ URL::asset('css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('css/bootstrap-select.css') }}" />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
+    <script src="{{ URL::asset('js/bootstrap-select.min.js') }}"></script>
+    <script src="{{ URL::asset('js/select2.full.js') }}"></script>
+
 </head>
 <body class="bg-gray-100 font-family-karla flex">
 
@@ -61,6 +68,11 @@
             <a href="{{route('admin.user.index')}}" class="@if(isset($page_current) && $page_current == 'user') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
                 <i class="fas fa-table mr-3"></i>
                 Quản Lý Users
+            </a>
+
+            <a href="{{route('admin.clinic.index')}}" class="@if(isset($page_current) && $page_current == 'clinic') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Quản Lý Phòng Khám
             </a>
 
             <a href="{{route('client.index')}}" class="flex items-center text-white py-4 pl-4 nav-item">
@@ -202,6 +214,8 @@
         var deleteProduct = '{!! route('admin.product.delete') !!}';
         var deleteCategory = '{!! route('admin.category.delete') !!}';
         var getDetailInvoice = '{!! route('admin.invoice.detail') !!}';
+        var DropdownGeneric = '{!! route('admin.dropdownGeneric') !!}';
+        var DropdownDrugUnit = '{!! route('admin.dropdownDrugUnit') !!}';
 
         $('.show_button_logout').on('click', function(e){
             if ($('.div_show_logout').hasClass("hidden")) {

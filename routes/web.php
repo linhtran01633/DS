@@ -73,6 +73,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/dashboard/usersAdd', [AdminController::class, 'userAdd'])->name('admin.user.add');
     Route::post('/admin/dashboard/usersDelete', [AdminController::class, 'userDelete'])->name('admin.user.delete');
 
+    Route::get('/admin/dashboard/clinic', [AdminController::class, 'clinicIndex'])->name('admin.clinic.index');
+    Route::post('/admin/dashboard/genericAdd', [AdminController::class, 'addGeneric'])->name('admin.generic.add');
+    Route::post('/admin/dashboard/drugUnitAdd', [AdminController::class, 'addDrugUnit'])->name('admin.drugUnit.add');
+
+
+
+    Route::get('/admin/dashboard/dropdownGeneric', [AdminController::class, 'dropdownGeneric'])->name('admin.dropdownGeneric');
+    Route::get('/admin/dashboard/dropdownDrugUnit', [AdminController::class, 'dropdownDrugUnit'])->name('admin.dropdownDrugUnit');
 
     Route::post('/logout_admin', [LoginController::class, 'logout_admin'])->name('logout_admin');
 
