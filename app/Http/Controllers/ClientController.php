@@ -26,16 +26,22 @@ class ClientController extends Controller
             }
 
             $categorys = Category::with(['Product'=>function($q){
-                $q->where('delete_flag', 0);
-                $q->take(10);
+              $q->where('delete_flag', 0);
             }]);
+
 
             if($request->category_id) {
                 $categorys = $categorys->where('id', $request->category_id);
+            } else {
+                $categorys = $categorys->whereHas('Product', function($query) {
+                    $query->where('delete_flag', 0)->take(10);
+                });
             }
 
             $categorys = $categorys->where('delete_flag', 0)
             ->get();
+
+
 
             return view('welcome')->with([
                 'best_sale' => $best_sale,
