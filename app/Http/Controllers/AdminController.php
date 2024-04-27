@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Drug;
 use App\Models\DrugUnit;
 use App\Models\Generic;
 use App\Models\ImageProduct;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\News;
+use App\Models\Patient;
 use App\Models\Product;
+use App\Models\Sick;
+use App\Models\Usage;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -281,16 +285,9 @@ class AdminController extends Controller
             try {
                 DB::transaction(function () use ($request) {
 
-                    $path = "public/news";
-                    $extension = strtolower($request->image->extension());
-                    $fileName = Carbon::now()->format('Ymdhisu').'.'.$extension;
-
                     $new_news = new News();
                     $data = $request->only($new_news->getFillable());
-                    $data['image'] = 'news/'. $fileName;
                     $new_news->fill($data)->save();
-
-                    $request->image->storeAs($path, $fileName);
 
                 });
             } catch (Exception $e) {
@@ -304,22 +301,9 @@ class AdminController extends Controller
         {
             try {
                 DB::transaction(function () use ($request) {
-
-                    $path = "public/news";
-                    if($request->image) {
-                        $extension = strtolower($request->image->extension());
-                        $fileName = Carbon::now()->format('Ymdhisu').'.'.$extension;
-                    }
-
                     $edit_news = News::where('id', $request->id)->first();
                     $data = $request->only($edit_news->getFillable());
-                    if($request->image) $data['image'] = 'news/'. $fileName;
-                    else unset($data['image']);
-
                     $edit_news->fill($data)->save();
-                    if($request->image) {
-                        $request->image->storeAs($path, $fileName);
-                    }
                 });
             } catch (Exception $e) {
                 Log::info($e->getMessage());
@@ -461,9 +445,19 @@ class AdminController extends Controller
         public function clinicIndex(Request $request)
         {
             try {
-                $generic = Generic::select( 'id','name')->where('status', 0)->get();
-                $drugUnit = DrugUnit::select( 'id','name')->where('status', 0)->get();
-                return view('admin.clinic')->with(['generic' => $generic, 'drugUnit' => $drugUnit]);
+                $patient = Patient::where('status', 0)->orderBy('id', 'desc')->get();
+                $usage = Usage::select( 'id','name')->where('status', 0)->orderBy('id', 'desc')->get();
+                $generic = Generic::select( 'id','name')->where('status', 0)->orderBy('id', 'desc')->get();
+                $drugUnit = DrugUnit::select( 'id','name')->where('status', 0)->orderBy('id', 'desc')->get();
+                $drug = Drug::with(['Generic', 'DrugUnit'])->where('status', 0)->orderBy('id', 'desc')->get();
+
+                return view('admin.clinic')->with([
+                    'drug' => $drug,
+                    'usage' => $usage,
+                    'generic' => $generic,
+                    'patient' => $patient,
+                    'drugUnit' => $drugUnit,
+                ]);
             } catch(Exception $e) {
                 return view('admin.page_404');
             }
@@ -498,6 +492,87 @@ class AdminController extends Controller
             }
 
             return Redirect::route('admin.clinic.index', ['tab' => 4])->with('message', 'Đăng kí thành công');
+        }
+
+        public function addDrug(Request $request)
+        {
+            try {
+                DB::transaction(function () use ($request) {
+                    $new_drug = new Drug();
+                    $new_drug->name = $request->name;
+                    $new_drug->price = $request->price;
+                    $new_drug->id_generic = $request->id_generic;
+                    $new_drug->id_drug_unit = $request->id_drug_unit;
+                    $new_drug->save();
+                });
+            } catch(Exception $e) {
+                return Redirect::route('admin.clinic.index', ['tab' => 5])->with('message', 'Đăng kí không thành công');
+            }
+
+            return Redirect::route('admin.clinic.index', ['tab' => 5])->with('message', 'Đăng kí thành công');
+        }
+
+        public function addUsage(Request $request)
+        {
+            try {
+                DB::transaction(function () use ($request) {
+                    $new_usage = new Usage();
+                    $new_usage->name = $request->name;
+                    $new_usage->save();
+                });
+            } catch(Exception $e) {
+                return Redirect::route('admin.clinic.index', ['tab' => 6])->with('message', 'Đăng kí không thành công');
+            }
+
+            return Redirect::route('admin.clinic.index', ['tab' => 6])->with('message', 'Đăng kí thành công');
+        }
+
+        public function patientAdd(Request $request)
+        {
+            try {
+                DB::transaction(function () use ($request) {
+                    $new_usage = new Patient();
+                    $new_usage->sex = $request->sex;
+                    $new_usage->job = $request->job;
+                    $new_usage->date = $request->date;
+                    $new_usage->name = $request->name;
+                    $new_usage->phone = $request->phone;
+                    $new_usage->ethnic = $request->ethnic;
+                    $new_usage->address = $request->address;
+                    $new_usage->workshop = $request->workshop;
+                    $new_usage->save();
+                });
+            } catch(Exception $e) {
+                return Redirect::route('admin.clinic.index', ['tab' => 1])->with('message', 'Đăng kí không thành công');
+            }
+
+            return Redirect::route('admin.clinic.index', ['tab' => 1])->with('message', 'Đăng kí thành công');
+        }
+
+        public function sickAdd(Request $request)
+        {
+            try {
+                DB::transaction(function () use ($request) {
+                    $new_sick = new Sick();
+                    $new_sick->T = $request->T;
+                    $new_sick->HA = $request->HA;
+                    $new_sick->BMI = $request->BMI;
+                    $new_sick->tall = $request->tall;
+                    $new_sick->date = $request->date;
+                    $new_sick->hours = $request->hours;
+                    $new_sick->weight = $request->weight;
+                    $new_sick->circuit = $request->circuit;
+                    $new_sick->symptom = $request->symptom;
+                    $new_sick->breathing = $request->breathing;
+                    $new_sick->blood_sugar = $request->blood_sugar;
+                    $new_sick->save();
+                });
+            } catch(Exception $e) {
+                dd($e->getMessage());
+                return Redirect::route('admin.clinic.index', ['tab' => 1])->with('message', 'Đăng kí không thành công');
+            }
+
+            return Redirect::route('admin.clinic.index', ['tab' => 1])->with('message', 'Đăng kí thành công');
         }
 
         public function dropdownGeneric(Request $request)

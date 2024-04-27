@@ -19,14 +19,13 @@
                     @csrf
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                         <div class="sm:col-span-2">
-                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tên Sản Phẩm</label>
+                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tiêu đề tin tức</label>
                             <input type="text" name="title" id="title" value="{{old('title')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Tiêu đề tin tức" required="">
                         </div>
 
                         <div class="sm:col-span-2">
-                            <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hình Ảnh Về Tin Tức</label>
-                            <input type="file" name="image" id="image" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Hình Ảnh Về Tin Tức" required="">
-                            <div class="mt-2 flex items-center flex-warp" id="preview_image"></div>
+                            <label for="link_youtube" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhúng link youtube</label>
+                            <input type="text" name="image" id="link_youtube" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="nhúng link youtube" required="">
                         </div>
 
                         <div class="sm:col-span-2">
@@ -139,14 +138,13 @@
                                 <input type="hidden" name="id" id="id_edit">
                                 <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
                                     <div class="sm:col-span-2">
-                                        <label for="title_edit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tên Sản Phẩm</label>
+                                        <label for="title_edit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tiêu đề tin tức</label>
                                         <input type="text" name="title" id="title_edit" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Tiêu đề tin tức" required="">
                                     </div>
 
                                     <div class="sm:col-span-2">
-                                        <label for="image_edit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hình Ảnh Về Tin Tức</label>
-                                        <input type="file" name="image" id="image_edit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Hình Ảnh Về Tin Tức" >
-                                        <div class="mt-2 flex items-center flex-warp" id="preview_image_edit"></div>
+                                        <label for="link_youtube" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nhúng link youtube</label>
+                                        <input type="text" name="image" id="link_youtube_edit" value="" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nhúng link youtube" >
                                     </div>
 
                                     <div class="sm:col-span-2">

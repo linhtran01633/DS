@@ -235,19 +235,13 @@ Alpine.start();
             data: { id: id },
             type: "GET",
             success: function(result) {
-                console.log(result);
-                $('#id_edit').val(result.id);
-                $('#title_edit').val(result.title);
-                $('#short_description_edit').val(result.short_description);
-                $('#detailed_description_edit').val(result.detailed_description);
+                console.log(result.image);
 
-                if(result.image != null) {
-                    $('#preview_image_edit').append(`
-                        <div class="w-20 h-20 border border-gray-300 rounded-lg mx-2 shadow">
-                            <img class="w-full h-full rounded-lg show_enlarge" data-src="/storage/${result.image}" src="/storage/${result.image}" alt="Preview">
-                        </div>
-                    `);
-                }
+                // $('#id_edit').val(result.id);
+                // $('#title_edit').val(result.title);
+                // $('#link_youtube_edit').val(result.image);
+                // $('#short_description_edit').val(result.short_description);
+                // $('#detailed_description_edit').val(result.detailed_description);
             },
             error: function(error) {
                 console.log(error);

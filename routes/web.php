@@ -24,7 +24,7 @@ Route::get('/liên-hệ', [ClientController::class, 'contact'])->name('client.co
 Route::get('/giỏ-hàng', [ClientController::class, 'shoppingCard'])->name('client.shoppingCard');
 Route::get('/shopping_card', [ClientController::class, 'shopping_card'])->name('client.shopping_card');
 Route::get('/tin-tức', [ClientController::class, 'news'])->name('client.news');
-
+Route::get('/tin-tức-chi-tiết', [ClientController::class, 'detailNews'])->name('client.detail.news');
 Route::post('/invoice', [ClientController::class, 'invoice'])->name('client.invoice');
 
 Route::post('/profile', [ProfileController::class, 'destroy'])->name('category.create');
@@ -76,8 +76,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard/clinic', [AdminController::class, 'clinicIndex'])->name('admin.clinic.index');
     Route::post('/admin/dashboard/genericAdd', [AdminController::class, 'addGeneric'])->name('admin.generic.add');
     Route::post('/admin/dashboard/drugUnitAdd', [AdminController::class, 'addDrugUnit'])->name('admin.drugUnit.add');
-
-
+    Route::post('/admin/dashboard/usageAdd', [AdminController::class, 'addUsage'])->name('admin.usage.add');
+    Route::post('/admin/dashboard/drugAdd', [AdminController::class, 'addDrug'])->name('admin.drug.add');
+    Route::post('/admin/dashboard/patientAdd', [AdminController::class, 'patientAdd'])->name('admin.patient.add');
+    Route::post('/admin/dashboard/sickAdd', [AdminController::class, 'sickAdd'])->name('admin.sick.add');
 
     Route::get('/admin/dashboard/dropdownGeneric', [AdminController::class, 'dropdownGeneric'])->name('admin.dropdownGeneric');
     Route::get('/admin/dashboard/dropdownDrugUnit', [AdminController::class, 'dropdownDrugUnit'])->name('admin.dropdownDrugUnit');

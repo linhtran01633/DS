@@ -164,4 +164,15 @@ class ClientController extends Controller
             return view('page404');
         }
     }
+
+    public function detailNews(Request $request)
+    {
+        try {
+            $news = News::where('delete_flag', 0)->where('id' , $request->id)->orderBy('id', 'desc')->first();
+            if($news) return view('detail_news')->with(['news'=> $news]);
+            else return view('page404');
+        } catch (Exception $e) {
+            return view('page404');
+        }
+    }
 }

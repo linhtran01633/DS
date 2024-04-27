@@ -229,6 +229,7 @@ $('.update_news').on('click', function(e){
             console.log(result);
             $('#id_edit').val(result.id);
             $('#title_edit').val(result.title);
+            $('#link_youtube_edit').val(result.image);
             $('#short_description_edit').val(result.short_description);
             $('#detailed_description_edit').val(result.detailed_description);
 
@@ -250,6 +251,13 @@ $('.update_news').on('click', function(e){
 
 $('.cancel_popup_news').on('click', function(e){
     $('#default-modal_news').addClass('hidden');
+});
+
+
+$('.detail_news').on('click', function(e){
+    console.log('clicked detail news');
+    let id = $(this).data('id');
+    window.location.href = `/tin-tức-chi-tiết?id=${id}`;
 });
 
 // kết thúc 1 khu vực

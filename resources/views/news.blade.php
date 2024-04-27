@@ -11,9 +11,9 @@
                     <div class="flex items-center justify-between flex-wrap grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1  gap-2">
                         @foreach ($news as $item)
                             <div class="p-1">
-                                <div class="wrap-product flex p-2 bg-white rounded-lg border-blue-600 hover:border">
+                                <div data-id="{{$item->id}}" class="detail_news wrap-product flex p-2 bg-white rounded-lg border-blue-600 hover:border">
                                     <div class="w-4/6">
-                                        <img class="w-11/12 mx-auto" style="aspect-ratio: 5/5" src="{{ asset('/storage/'.$item->image) }}">
+                                        <img class="w-11/12 mx-auto" style="aspect-ratio: 5/5" src="{{ asset('/images/icon_video.png') }}">
                                     </div>
                                     <div class="w-2/6">
                                         <div class="font-bold">{{$item->title}}</div>
