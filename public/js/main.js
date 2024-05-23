@@ -670,3 +670,646 @@ function thongbao(text) {
         document.body.removeChild(divThongBao)
     }, 1000);
 }
+
+
+$('.patient_details').change(function(e) {
+    $('.patient_details').not(this).prop('checked', false); // Loại bỏ chọn tất cả các checkbox khác
+    $('.patient_details').parent().parent().parent().find('tr').css('background-color', 'white');
+    if ($(this).is(':checked')) {
+        var dataId = $(this).data('id');
+        $('#id_patient_sick').val(dataId);
+        $(this).parent().parent().css('background-color', 'whitesmoke');
+    }
+});
+
+$('#create_patient').on('click', function(e) {
+        // e.preventDefault();
+        if($('#id_patient_sick').val() != '') {
+            let allFieldsFilled = true;
+            $('#form_create_patient').find('[required]').each(function() {
+                if ($(this).val() === '') {
+                    allFieldsFilled = false;
+                    return false; // Dừng vòng lặp khi gặp trường required chưa được điền
+                }
+            });
+
+            if(allFieldsFilled) {
+                $('#form_create_patient').submit();
+            } else {
+                thongbao('Vui lòng nhập ngày khám và giờ khám');
+            }
+
+    } else {
+        thongbao('Vui lòng chọn 1 bênh nhân để đăng kí khám bệnh');
+    }
+});
+
+
+$('.patient_sicks').change(function(e) {
+    $('.patient_sicks').not(this).prop('checked', false); // Loại bỏ chọn tất cả các checkbox khác
+    $('.patient_sicks').parent().parent().parent().find('tr').css('background-color', 'white');
+    if ($(this).is(':checked')) {
+        var dataId = $(this).data('id');
+        $(this).parent().parent().css('background-color', 'whitesmoke');
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: getListPatientSicks,
+            data: {id : dataId},
+            type: "GET",
+            success: function(result) {
+                let append = ``;
+                let array_temp = result.array_temp;
+                for (var key in result.array_temp) {
+                    if (array_temp.hasOwnProperty(key)) {
+                        append += `<div>${key}</div>`;
+                        array_temp[key].forEach(function(result_child) {
+                            console.log(result_child);
+                            let result_detail = result_child.result ? result_child.result : 'đăng kí khám';
+                            append += `
+                                <div class="truncate w-full ml-4">
+                                    <input type="checkbox" class="diagnostic" value="1" id="diagnostic${result_child.id}"
+                                    data-t="${result_child.t}"
+                                    data-id="${result_child.id}"
+                                    data-ha="${result_child.HA}"
+                                    data-bmi="${result_child.BMI}"
+                                    data-date="${result_child.date}"
+                                    data-tall="${result_child.tall}"
+                                    data-hours="${result_child.hours}"
+                                    data-weight="${result_child.weight}"
+                                    data-result="${result_child.result}"
+                                    data-circuit="${result_child.circuit}"
+                                    data-symptom="${result_child.symptom}"
+                                    data-result1="${result_child.result1}"
+                                    data-result2="${result_child.result2}"
+                                    data-result3="${result_child.result3}"
+                                    data-breathing="${result_child.breathing}"
+                                    data-bloodSugar="${result_child.bloodSugar}"
+                                    >
+                                    <lable  for="diagnostic${result_child.id}">${result_detail}</lable>
+                                </div>
+                            `;
+                        });
+                    }
+                }
+
+                $('#list_stick').empty().append(append);
+
+                $('#sex_patient_tab2').val(result.patient.sex);
+                $('#name_patient_tab2').val(result.patient.name);
+                $('#date_patient_tab2').val(result.patient.date);
+                $('#phone_patient_tab2').val(result.patient.phone);
+                $('#ethnic_patient_tab2').val(result.patient.ethnic);
+                $('#address_patient_tab2').val(result.patient.address);
+                $('#workshop_patient_tab2').val(result.patient.workshop);
+                emptySickTab2();
+            },
+            error: function(error) {
+                console.log(error);
+            },
+        });
+    } else {
+        $('#list_stick').empty();
+        $('#sex_patient_tab2').val('');
+        $('#name_patient_tab2').val('');
+        $('#date_patient_tab2').val('');
+        $('#phone_patient_tab2').val('');
+        $('#ethnic_patient_tab2').val('');
+        $('#address_patient_tab2').val('');
+        $('#workshop_patient_tab2').val('');
+
+        emptySickTab2();
+    }
+});
+
+$(document).on('click', '.diagnostic', function(e) {
+    console.log('clicked diagnostic');
+
+    $('.diagnostic').not(this).prop('checked', false); // Loại bỏ chọn tất cả các checkbox khác
+
+    if ($(this).is(':checked')) {
+        let t = $(this).data('t');
+        let id = $(this).data('id');
+        let ha = $(this).data('ha');
+        let bmi = $(this).data('bmi');
+        let date = $(this).data('date');
+        let tall = $(this).data('tall');
+        let hours = $(this).data('hours');
+        let weight = $(this).data('weight');
+        let result = $(this).data('result');
+        let circuit = $(this).data('circuit');
+        let symptom = $(this).data('symptom');
+        let result1 = $(this).data('result1');
+        let result2 = $(this).data('result2');
+        let result3 = $(this).data('result3');
+        let breathing = $(this).data('breathing');
+        let bloodSugar = $(this).data('bloodSugar');
+
+        console.log(bloodSugar);
+
+        $('#t_sick_tab2').val(t);
+        $('#id_sick_tab2').val(id);
+        $('#ha_sick_tab2').val(ha);
+        $('#bmi_sick_tab2').val(bmi);
+        $('#result_sick').val(result);
+        $('#m_sick_tab2').val(circuit);
+        $('#date_sick_tab2').val(date);
+        $('#tall_sick_tab2').val(tall);
+        $('#result1_sick').val(result1);
+        $('#result2_sick').val(result2);
+        $('#result3_sick').val(result3);
+        $('#time_sick_tab2').val(hours);
+        $('#nt_sick_tab2').val(breathing);
+        $('#dh_sick_tab2').val(bloodSugar);
+        $('#weight_sick_tab2').val(weight);
+        $('#symptom_sick_tab2').val(symptom);
+
+    } else {
+        emptySickTab2();
+    }
+});
+
+function emptySickTab2() {
+    $('#result_sick').val('');
+    $('#m_sick_tab2').val('');
+    $('#t_sick_tab2').val('');
+    $('#id_sick_tab2').val('');
+    $('#ha_sick_tab2').val('');
+    $('#dh_sick_tab2').val('');
+    $('#nt_sick_tab2').val('');
+    $('#result1_sick').val('');
+    $('#result3_sick').val('');
+    $('#result2_sick').val('');
+    $('#bmi_sick_tab2').val('');
+    $('#date_sick_tab2').val('');
+    $('#tall_sick_tab2').val('');
+    $('#time_sick_tab2').val('');
+    $('#weight_sick_tab2').val('');
+    $('#symptom_sick_tab2').val('');
+}
+
+$('.update_generic').on('click', function(e){
+    $('#id_generic_edit').val($(this).data('id'));
+    $('#name_generic_edit').val($(this).data('name'))
+    $('#default-modal_generic').removeClass('hidden');
+});
+
+$('.cancel_popup_generic').on('click', function(e){
+    $('#default-modal_generic').addClass('hidden');
+});
+
+$('.update_drugUnit').on('click', function(e){
+    $('#id_drugUnit_edit').val($(this).data('id'));
+    $('#name_drugUnit_edit').val($(this).data('name'))
+    $('#default-modal_drugUnit').removeClass('hidden');
+});
+
+$('.cancel_popup_drugUnit').on('click', function(e){
+    $('#default-modal_drugUnit').addClass('hidden');
+});
+
+
+
+$('.update_usage').on('click', function(e){
+    $('#id_usage_edit').val($(this).data('id'));
+    $('#name_usage_edit').val($(this).data('name'))
+    $('#default-modal_usage').removeClass('hidden');
+});
+
+$('.cancel_popup_usage').on('click', function(e){
+    $('#default-modal_usage').addClass('hidden');
+});
+
+$('.update_drug').on('click', function(e){
+    $('#id_drug_edit').val($(this).data('id'));
+    $('#name_drug_edit').val($(this).data('name'))
+    $('#price_drug_edit').val($(this).data('price'))
+    $('#id_drug_unit_edit').val($(this).data('id_drug_unit'))
+    $('#id_generic_edit_tab5').val($(this).data('id_generic'))
+    $('#default-modal_drug').removeClass('hidden');
+});
+
+$('.cancel_popup_drug').on('click', function(e){
+    $('#default-modal_drug').addClass('hidden');
+});
+
+$('#submit_update_sick').on('click', function(e){
+    if($('#id_sick_tab2').val() != '') {
+        $('#form_update_sick').submit();
+    } else {
+        thongbao('Vui lòng chọn 1 lần khám');
+    }
+});
+
+
+$('.btn_medicine_supply').on('click', function(e){
+    if($('#id_sick_tab2').val() != '') {
+        $('.list_sick_popup').empty();
+        $('.table_drug_list').empty();
+        $('#sick_id_drug_add').val($('#id_sick_tab2').val());
+        $('#id_sick_export').val($('#id_sick_tab2').val());
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: listPrescription,
+            data: {id : $('#id_sick_tab2').val()},
+            type: "get",
+            success: function(result) {
+                console.log(result);
+                $('#name_bn').val(result.sick.patient.name);
+                $('#chuan_doan').val(result.sick.result);
+                $('#ket_luan').val(result.sick.result);
+                $('#trieu_chung').val(result.sick.symptom);
+                $('#loi_dan').val(result.sick.result4);
+                $('#mach_popup').text(result.sick.circuit);
+                $('#t_popup').text(result.sick.T);
+                $('#ha_popup').text(result.sick.HA);
+                $('#cao_popup').text(result.sick.tall);
+                $('#nang_popup').text(result.sick.weight);
+                $('#on_leave_popup').val(result.sick.on_leave);
+
+                let index =  1;
+                if(result.sick.prescription != null) {
+                    result.sick.prescription.prescription_detail.forEach(element => {
+
+                        let append = `
+                            <tr>
+                                <td class="border text-center">
+                                    <input type="checkbox" class="row_detail_prescription"
+                                    data-note="${element.note ? element.note : ''}"
+                                    data-price="${element.price ? element.price : ''}"
+                                    data-dosage="${element.dosage ? element.dosage : ''}"
+                                    data-session="${element.session ? element.session : ''}"
+                                    data-id_drug="${element.id_drug ? element.id_drug : ''}"
+                                    data-quantity="${element.quantity ? element.quantity : ''}"
+                                    data-id_usage="${element.id_usage ? element.id_usage : ''}"
+                                    data-every_day="${element.every_day ? element.every_day : ''}"
+                                    data-every_times="${element.every_times ? element.every_times : ''}"
+                                    data-number_of_day="${element.number_of_day ? element.number_of_day : ''}"
+                                    value="1">
+                                    <input type="hidden" name="detail[${index}][note]" value="${element.note ? element.note : ''}">
+                                    <input type="hidden" name="detail[${index}][price]" value="${element.price ? element.price : ''}">
+                                    <input type="hidden" name="detail[${index}][dosage]" value="${element.dosage ? element.dosage : ''}">
+                                    <input type="hidden" name="detail[${index}][session]" value="${element.session ? element.session : ''}">
+                                    <input type="hidden" name="detail[${index}][id_drug]" value="${element.id_drug ? element.id_drug : ''}">
+                                    <input type="hidden" name="detail[${index}][quantity]" value="${element.quantity ? element.quantity : ''}">
+                                    <input type="hidden" name="detail[${index}][id_usage]" value="${element.id_usage ? element.id_usage : ''}">
+                                    <input type="hidden" name="detail[${index}][every_day]" value="${element.every_day ? element.every_day : ''}">
+                                    <input type="hidden" name="detail[${index}][every_times]" value="${element.every_times ? element.every_times : ''}">
+                                    <input type="hidden" name="detail[${index}][number_of_day]" value="${element.number_of_day ? element.number_of_day : ''}">
+                                </td>
+                                <td class="border">${element.drug ? element.drug.name : ''}</td>
+                                <td class="border">${element.drug.generic ? element.drug.generic.name : ''}</td>
+                                <td class="border">${element.drug.drug_unit ? element.drug.drug_unit.name : ''}</td>
+                                <td class="border">${element.every_day ? element.every_day : ''}</td>
+                                <td class="border">${element.every_times ? element.every_times : ''}</td>
+                                <td class="border">${element.number_of_day ? element.number_of_day : ''}</td>
+                                <td class="border">${element.quantity ? element.quantity : ''}</td>
+                                <td class="border">${element.price ? element.price : ''}</td>
+                                <td class="border">${element.dosage ? element.dosage : ''}</td>
+                                <td class="border">${element.usage ? element.usage.name : ''}</td>
+                                <td class="border">${element.session ? element.session : ''}</td>
+                                <td class="border">${element.note ? element.note : ''}</td>
+                            </tr>
+                        `;
+
+                        $('.table_drug_list').append(append);
+
+                        index = index + 1;
+
+                        $('#index_table').val(index)
+                    });
+                }
+
+                result.list_prescription.forEach((element, index1 )=> {
+                    $('.list_sick_popup').append(`
+                        <div class="flex">
+                            <lable for="list_sick_popup_${index1}">
+                                <input type="checkbox" class="list_sick_popup_class" id="list_sick_popup_${index1}" data-sick="${element.id}"/>
+                                ${element.date}_${element.result}
+                            </lable>
+                        </div>
+                    `);
+                });
+            },
+        });
+
+
+        $('#default-modal_medicine_supply').removeClass('hidden');
+    } else {
+        thongbao('Vui lòng chọn 1 lần khám');
+    }
+});
+
+$('.cancel_popup_medicine_supply').on('click', function(e){
+    $('#default-modal_medicine_supply').addClass('hidden');
+});
+
+$('.add_them_thuoc').on('click', function(e){
+    console.log('thêm thuốc');
+    let button = $(this);
+    button.attr('disabled', true);
+
+    let note_drug_add = $('#note_drug_add').val();
+    let name_drug_add = $('#name_drug_add').val();
+    let usage_drug_add = $('#usage_drug_add').val();
+    let price_drug_add = $('#price_drug_add').val();
+    let dosage_drug_add = $('#dosage_drug_add').val();
+    let session_drug_add = $('#session_drug_add').val();
+    let sick_id_drug_add = $('#sick_id_drug_add').val();
+    let quantity_drug_add = $('#quantity_drug_add').val();
+    let every_day_drug_add = $('#every_day_drug_add').val();
+    let every_times_drug_add = $('#every_times_drug_add').val();
+    let number_of_day_drug_add = $('#number_of_day_drug_add').val();
+
+    let data = {
+        id : name_drug_add,
+        note_drug_add : note_drug_add,
+        usage_drug_add : usage_drug_add,
+        price_drug_add : price_drug_add,
+        dosage_drug_add : dosage_drug_add,
+        sick_id_drug_add : sick_id_drug_add,
+        session_drug_add : session_drug_add,
+        quantity_drug_add : quantity_drug_add,
+        every_day_drug_add : every_day_drug_add,
+        every_times_drug_add : every_times_drug_add,
+        number_of_day_drug_add : number_of_day_drug_add,
+    }
+
+    handle_add_drug(data, button, 'Thêm');
+
+});
+
+function handle_add_drug(data, button, status) {
+    if(data.id == '' || data.price_drug_add == '') {
+        thongbao('Vui lòng điền tên thuốc và đơn giá');
+        button.attr('disabled', false);
+    } else {
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: addPrescription,
+            data: data,
+            type: "POST",
+            success: function(result) {
+                console.log(result);
+                let index = Number($('#index_table').val()) + 1;
+                let append = `
+                    <tr>
+                        <td class="border text-center">
+                            <input type="checkbox" class="row_detail_prescription"
+                            data-note="${result.note ? result.note : ''}"
+                            data-price="${result.price ? result.price : ''}"
+                            data-dosage="${result.dosage ? result.dosage : ''}"
+                            data-session="${result.session ? result.session : ''}"
+                            data-id_drug="${result.id_drug ? result.id_drug : ''}"
+                            data-quantity="${result.quantity ? result.quantity : ''}"
+                            data-id_usage="${result.id_usage ? result.id_usage : ''}"
+                            data-every_day="${result.every_day ? result.every_day : ''}"
+                            data-every_times="${result.every_times ? result.every_times : ''}"
+                            data-number_of_day="${result.number_of_day ? result.number_of_day : ''}"
+                             value="1">
+                            <input type="hidden" name="detail[${index}][note]" value="${result.note ? result.note : ''}">
+                            <input type="hidden" name="detail[${index}][price]" value="${result.price ? result.price : ''}">
+                            <input type="hidden" name="detail[${index}][dosage]" value="${result.dosage ? result.dosage : ''}">
+                            <input type="hidden" name="detail[${index}][session]" value="${result.session ? result.session : ''}">
+                            <input type="hidden" name="detail[${index}][id_drug]" value="${result.id_drug ? result.id_drug : ''}">
+                            <input type="hidden" name="detail[${index}][quantity]" value="${result.quantity ? result.quantity : ''}">
+                            <input type="hidden" name="detail[${index}][id_usage]" value="${result.id_usage ? result.id_usage : ''}">
+                            <input type="hidden" name="detail[${index}][every_day]" value="${result.every_day ? result.every_day : ''}">
+                            <input type="hidden" name="detail[${index}][every_times]" value="${result.every_times ? result.every_times : ''}">
+                            <input type="hidden" name="detail[${index}][number_of_day]" value="${result.number_of_day ? result.number_of_day : ''}">
+                        </td>
+                        <td class="border">${result.name_drug ? result.name_drug : ''}</td>
+                        <td class="border">${result.generic ? result.generic : ''}</td>
+                        <td class="border">${result.drug_unit ? result.drug_unit : ''}</td>
+                        <td class="border">${result.every_day ? result.every_day : ''}</td>
+                        <td class="border">${result.every_times ? result.every_times : ''}</td>
+                        <td class="border">${result.number_of_day ? result.number_of_day : ''}</td>
+                        <td class="border">${result.quantity ? result.quantity : ''}</td>
+                        <td class="border">${result.price ? result.price : ''}</td>
+                        <td class="border">${result.dosage ? result.dosage : ''}</td>
+                        <td class="border">${result.name_usage ? result.name_usage : ''}</td>
+                        <td class="border">${result.session ? result.session : ''}</td>
+                        <td class="border">${result.note ? result.note : ''}</td>
+                    </tr>
+                `;
+
+                $('.table_drug_list').append(append);
+
+                thongbao(status +' thành công');
+                button.attr('disabled', false);
+                $('#index_table').val(index);
+            },
+            error: function(error) {
+                console.log(error);
+                thongbao(status +' không thành công');
+                button.attr('disabled', false);
+            },
+        });
+    }
+}
+
+$(document).on('change','.row_detail_prescription', function(e) {
+    $('.row_detail_prescription').not(this).prop('checked', false);
+    if ($(this).is(':checked')) {
+        $('#note_drug_add').val($(this).data('note'));
+        $('#name_drug_add').val($(this).data('id_drug'));
+        $('#usage_drug_add').val($(this).data('id_usage'));
+        $('#price_drug_add').val($(this).data('price'));
+        $('#dosage_drug_add').val($(this).data('dosage'));
+        $('#session_drug_add').val($(this).data('session'));
+        $('#quantity_drug_add').val($(this).data('quantity'));
+        $('#every_day_drug_add').val($(this).data('every_day'));
+        $('#every_times_drug_add').val($(this).data('every_times'));
+        $('#number_of_day_drug_add').val($(this).data('number_of_day'));
+    }
+});
+
+$(document).on('click', '.delete_row_prescription', function(e){
+    let delete_status = false;
+    let checkboxes = document.querySelectorAll('.row_detail_prescription');
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            delete_status = true;
+            $(checkbox).parent().parent().remove();
+        }
+    });
+
+    if(delete_status == false) {
+        thongbao('Vui lòng chọn 1 dòng để xoá');
+    }
+});
+
+
+$(document).on('click', '.edit_row_prescription', function(e){
+    e.preventDefault();
+    let button = $(this);
+    button.attr('disabled', true);
+    let edit_status = false;
+
+    let  checkboxes = document.querySelectorAll('.row_detail_prescription');
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            edit_status = true;
+            $(checkbox).parent().parent().remove();
+            let note_drug_add = $('#note_drug_add').val();
+            let name_drug_add = $('#name_drug_add').val();
+            let usage_drug_add = $('#usage_drug_add').val();
+            let price_drug_add = $('#price_drug_add').val();
+            let dosage_drug_add = $('#dosage_drug_add').val();
+            let session_drug_add = $('#session_drug_add').val();
+            let sick_id_drug_add = $('#sick_id_drug_add').val();
+            let quantity_drug_add = $('#quantity_drug_add').val();
+            let every_day_drug_add = $('#every_day_drug_add').val();
+            let every_times_drug_add = $('#every_times_drug_add').val();
+            let number_of_day_drug_add = $('#number_of_day_drug_add').val();
+
+            let data = {
+                id : name_drug_add,
+                note_drug_add : note_drug_add,
+                usage_drug_add : usage_drug_add,
+                price_drug_add : price_drug_add,
+                dosage_drug_add : dosage_drug_add,
+                sick_id_drug_add : sick_id_drug_add,
+                session_drug_add : session_drug_add,
+                quantity_drug_add : quantity_drug_add,
+                every_day_drug_add : every_day_drug_add,
+                every_times_drug_add : every_times_drug_add,
+                number_of_day_drug_add : number_of_day_drug_add,
+            }
+
+            handle_add_drug(data, button, 'Sửa');
+        }
+    });
+
+    if(edit_status == false) {
+        thongbao('Vui lòng chọn 1 dòng để sửa');
+    }
+});
+
+$('.save_prescription').on('click', function(e){
+    e.preventDefault();
+    let button = $(this);
+    button.attr('disabled', true);
+    console.log('clicked save_prescription');
+    let data_form = $("#submit_form_save_prescription").serialize();
+    console.log(data_form);
+
+    $.ajax({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+        url: savePrescription,
+        data: data_form,
+        type: "POST",
+        success: function(result) {
+            thongbao('Lưu thành công');
+            // e.Graphics.DrawString((i + 1) + "." + DonThuoc.Rows[i]["Ten thuoc"] + "\t" + "\t" + DonThuoc.Rows[i]["so luong"] + " " + DonThuoc.Rows[i]["don vi thuoc"], new Font("Arial", 15, FontStyle.Italic), Brushes.Black, new Point(50, h));
+            // e.Graphics.DrawString("\t" + DonThuoc.Rows[i]["lieu dung"] + "(" + DonThuoc.Rows[i]["so ngay"] + "  ngày) " +"\t\t\t\t\t\t\t", new Font("Arial", 15, FontStyle.Underline), Brushes.Black, new Point(50, k));
+
+            result.forEach(function(item) {
+                let append = `
+                <div>
+
+                </div>
+                `;
+
+            });
+            button.attr('disabled', false);
+        },
+        error: function(error) {
+            console.log(error);
+            thongbao('Lưu không thành công');
+            button.attr('disabled', false);
+        },
+    });
+
+});
+
+$('.give_back').on('click', function(e){
+
+    $('.table_drug_list').empty();
+    let id = $('.list_sick_popup_class:checked').data('sick');
+
+    if(id != undefined && id != null && id != '') {
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: listPrescription,
+            data: {id : id},
+            type: "get",
+            success: function(result) {
+                console.log(result);
+                let index =  1;
+                if(result.sick.prescription != null) {
+                    result.sick.prescription.prescription_detail.forEach(element => {
+
+                        let append = `
+                            <tr>
+                                <td class="border text-center">
+                                    <input type="checkbox" class="row_detail_prescription"
+                                    data-note="${element.note ? element.note : ''}"
+                                    data-price="${element.price ? element.price : ''}"
+                                    data-dosage="${element.dosage ? element.dosage : ''}"
+                                    data-session="${element.session ? element.session : ''}"
+                                    data-id_drug="${element.id_drug ? element.id_drug : ''}"
+                                    data-quantity="${element.quantity ? element.quantity : ''}"
+                                    data-id_usage="${element.id_usage ? element.id_usage : ''}"
+                                    data-every_day="${element.every_day ? element.every_day : ''}"
+                                    data-every_times="${element.every_times ? element.every_times : ''}"
+                                    data-number_of_day="${element.number_of_day ? element.number_of_day : ''}"
+                                    value="1">
+                                    <input type="hidden" name="detail[${index}][note]" value="${element.note ? element.note : ''}">
+                                    <input type="hidden" name="detail[${index}][price]" value="${element.price ? element.price : ''}">
+                                    <input type="hidden" name="detail[${index}][dosage]" value="${element.dosage ? element.dosage : ''}">
+                                    <input type="hidden" name="detail[${index}][session]" value="${element.session ? element.session : ''}">
+                                    <input type="hidden" name="detail[${index}][id_drug]" value="${element.id_drug ? element.id_drug : ''}">
+                                    <input type="hidden" name="detail[${index}][quantity]" value="${element.quantity ? element.quantity : ''}">
+                                    <input type="hidden" name="detail[${index}][id_usage]" value="${element.id_usage ? element.id_usage : ''}">
+                                    <input type="hidden" name="detail[${index}][every_day]" value="${element.every_day ? element.every_day : ''}">
+                                    <input type="hidden" name="detail[${index}][every_times]" value="${element.every_times ? element.every_times : ''}">
+                                    <input type="hidden" name="detail[${index}][number_of_day]" value="${element.number_of_day ? element.number_of_day : ''}">
+                                </td>
+                                <td class="border">${element.drug ? element.drug.name : ''}</td>
+                                <td class="border">${element.drug.generic ? element.drug.generic.name : ''}</td>
+                                <td class="border">${element.drug.drug_unit ? element.drug.drug_unit.name : ''}</td>
+                                <td class="border">${element.every_day ? element.every_day : ''}</td>
+                                <td class="border">${element.every_times ? element.every_times : ''}</td>
+                                <td class="border">${element.number_of_day ? element.number_of_day : ''}</td>
+                                <td class="border">${element.quantity ? element.quantity : ''}</td>
+                                <td class="border">${element.price ? element.price : ''}</td>
+                                <td class="border">${element.dosage ? element.dosage : ''}</td>
+                                <td class="border">${element.usage ? element.usage.name : ''}</td>
+                                <td class="border">${element.session ? element.session : ''}</td>
+                                <td class="border">${element.note ? element.note : ''}</td>
+                            </tr>
+                        `;
+
+                        $('.table_drug_list').append(append);
+
+                        index = index + 1;
+
+                        $('#index_table').val(index)
+                    });
+                }
+            },
+        });
+    } else {
+        thongbao('Vui lòng chọn 1 dòng để cho lại thuốc');
+    }
+});
+
+$(document).on('click', '.list_sick_popup_class', function(e) {
+    $('.list_sick_popup_class').not(this).prop('checked', false); // Loại bỏ chọn tất cả các checkbox khác
+});
+
+
+$(document).on('click','#printerFile', function(e) {
+   $('#export_pdf').submit();
+})

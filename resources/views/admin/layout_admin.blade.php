@@ -28,6 +28,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
     <script src="{{ URL::asset('js/bootstrap-select.min.js') }}"></script>
     <script src="{{ URL::asset('js/select2.full.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
 </head>
 <body class="bg-gray-100 font-family-karla flex">
@@ -162,11 +163,11 @@
                 @yield('content')
             </div>
 
-            <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+            {{-- <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
                 <footer class="w-full bg-white text-right p-4">
                     Built by <a target="_blank" href="https://davidgrzyb.com" class="underline">VIỆT CHÂU PHARMACY</a>.
                 </footer>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -213,9 +214,15 @@
         var updateInvoice = '{!! route('admin.invoice.edit') !!}';
         var deleteProduct = '{!! route('admin.product.delete') !!}';
         var deleteCategory = '{!! route('admin.category.delete') !!}';
+        var addPrescription = '{!! route('admin.addPrescription') !!}';
         var getDetailInvoice = '{!! route('admin.invoice.detail') !!}';
         var DropdownGeneric = '{!! route('admin.dropdownGeneric') !!}';
         var DropdownDrugUnit = '{!! route('admin.dropdownDrugUnit') !!}';
+        var savePrescription = '{!! route('admin.savePrescription') !!}';
+        var listPrescription = '{!! route('admin.listPrescription') !!}';
+        var getListPatientSicks = '{!! route('admin.listPatientSicks') !!}';
+
+
 
         $('.show_button_logout').on('click', function(e){
             if ($('.div_show_logout').hasClass("hidden")) {

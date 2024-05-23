@@ -13,6 +13,7 @@ class Sick extends Model
     public $incrementing = false;
     public $keyType = 'string';
     protected $fillable = [
+        'id_patient',
         'date',
         'hours',
         'hours',
@@ -30,4 +31,14 @@ class Sick extends Model
         'result3',
         'result4',
     ];
+
+    public function Patient()
+    {
+        return $this->hasOne(\App\Models\Patient::class,'id','id_patient');
+    }
+
+    public function Prescription()
+    {
+        return $this->hasOne(\App\Models\Prescription::class,'id_sick','id');
+    }
 }
