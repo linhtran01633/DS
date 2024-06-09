@@ -30,6 +30,9 @@
     <script src="{{ URL::asset('js/select2.full.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+
 </head>
 <body class="bg-gray-100 font-family-karla flex">
 
@@ -46,9 +49,14 @@
                 <i class="fas fa-tachometer-alt mr-3"></i>
                 Trang chủ
             </a>
+            <a href="{{route('admin.categoryParent.index')}}" class="@if(isset($page_current) && $page_current == 'category_parent') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
+                <i class="fas fa-table mr-3"></i>
+                Quản Lý Danh Mục Cha
+            </a>
+
             <a href="{{route('admin.category.index')}}" class="@if(isset($page_current) && $page_current == 'category') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
                 <i class="fas fa-table mr-3"></i>
-                Quản Lý Danh Mục
+                Quản Lý Danh Mục Con
             </a>
 
             <a href="{{route('admin.product.index')}}" class="@if(isset($page_current) && $page_current == 'product') active-nav-link @endif flex items-center text-white py-4 pl-4 nav-item">
@@ -212,6 +220,7 @@
         var deleteNews = '{!! route('admin.news.delete') !!}';
         var getProduct = '{!! route('admin.product.detail') !!}';
         var updateInvoice = '{!! route('admin.invoice.edit') !!}';
+        var getImgSickURL = '{!! route('admin.getImgSick.get') !!}';
         var deleteProduct = '{!! route('admin.product.delete') !!}';
         var deleteCategory = '{!! route('admin.category.delete') !!}';
         var addPrescription = '{!! route('admin.addPrescription') !!}';
@@ -221,8 +230,7 @@
         var savePrescription = '{!! route('admin.savePrescription') !!}';
         var listPrescription = '{!! route('admin.listPrescription') !!}';
         var getListPatientSicks = '{!! route('admin.listPatientSicks') !!}';
-
-
+        var deleteCategoryParent = '{!! route('admin.categoryParent.delete') !!}';
 
         $('.show_button_logout').on('click', function(e){
             if ($('.div_show_logout').hasClass("hidden")) {

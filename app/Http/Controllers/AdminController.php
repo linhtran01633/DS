@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CategoryParent;
 use App\Models\Drug;
 use App\Models\DrugUnit;
 use App\Models\Generic;
 use App\Models\ImageProduct;
+use App\Models\ImageSick;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\News;
@@ -28,29 +30,105 @@ use PDF;
 
 class AdminController extends Controller
 {
-    // khu vực sử lý của danh mục
-        public function index(Request $request)
-        {
-            try {
-                $page_current = 'home';
-                return view('admin.index')->with(['page_current' => $page_current]);
-            } catch (Exception $e) {
-                return view('admin.index');
-            }
+
+    public function index(Request $request)
+    {
+        try {
+            $page_current = 'home';
+            return view('admin.index')->with(['page_current' => $page_current]);
+        } catch (Exception $e) {
+            return view('admin.index');
         }
+    }
 
-        public function categoryIndex(Request $request)
+    // khu vực sử lý danh mục cha
+        public function categoryParent(Request $request)
         {
             try {
-                $page_current = 'category';
+                $page_current = 'category_parent';
 
-                $categorys = Category::where('delete_flag', 0)->orderBy('id', 'DESC');
+                $categorys = CategoryParent::where('delete_flag', 0)->orderBy('id', 'DESC');
 
                 if($request->search_name) $categorys = $categorys->where('name','LIKE', '%'.$request->search_name .'%');
 
                 $categorys = $categorys->paginate(10);
 
-                return view('admin.category')->with(['page_current' => $page_current, 'categorys' => $categorys]);
+                return view('admin.category_parent')->with(['page_current' => $page_current, 'categorys' => $categorys]);
+            } catch (Exception $e) {
+                return view('admin.category_parent');
+            }
+        }
+
+        public function categoryParentAdd(Request $request)
+        {
+            try {
+                DB::transaction(function() use ($request) {
+                    $new_category = new CategoryParent();
+                    $new_category->name = $request->name;
+                    $new_category->id = CategoryParent::max('id') + 1;
+                    $new_category->save();
+                });
+            } catch (Exception $e) {
+                Log::info($e->getMessage());
+                return Redirect::route('admin.categoryParent.index')->with('message',  'Đăng kí không thành công');
+            }
+
+            return Redirect::route('admin.categoryParent.index')->with('message', 'Đăng kí thành công');
+        }
+
+        public function categoryParentEdit(Request $request)
+        {
+            try {
+                DB::transaction(function () use ($request) {
+                    CategoryParent::where('id', $request->id)
+                    ->update([
+                        'name' => $request->name
+                    ]);
+                });
+            } catch (Exception $e) {
+                return Redirect::route('admin.categoryParent.index')->with('message', $e->getMessage());
+            }
+            return Redirect::route('admin.categoryParent.index')->with('message', 'Cập nhập thành công');
+
+        }
+
+        public function categoryParentDelete(Request $request)
+        {
+            try {
+                DB::transaction(function () use ($request) {
+                    CategoryParent::where('id', $request->id)
+                    ->update([
+                        'delete_flag' => 1
+                    ]);
+                });
+            } catch (Exception $e) {
+                return response()->json($e->getMessage(), 500, [], JSON_UNESCAPED_UNICODE);
+            }
+
+            return response()->json('Xoá thành công', 200, [], JSON_UNESCAPED_UNICODE);
+        }
+
+
+    // kết thúc khu vực sử lý danh mục cha
+    // khu vực sử lý của danh mục
+        public function categoryIndex(Request $request)
+        {
+            try {
+                $page_current = 'category';
+
+
+                $categorys = Category::where('delete_flag', 0)->orderBy('name', 'ASC');
+                $categoryParents = CategoryParent::where('delete_flag', 0)->orderBy('name', 'ASC')->get();
+
+                if($request->search_name) $categorys = $categorys->where('name','LIKE', '%'.$request->search_name .'%');
+
+                $categorys = $categorys->paginate(10);
+
+                return view('admin.category')->with([
+                    'categorys' => $categorys,
+                    'page_current' => $page_current,
+                    'categoryParents' => $categoryParents,
+                ]);
             } catch (Exception $e) {
                 return view('admin.category');
             }
@@ -62,10 +140,10 @@ class AdminController extends Controller
                 DB::transaction(function() use ($request) {
                     $new_category = new Category();
                     $new_category->name = $request->name;
+                    $new_category->category_parent_id = $request->category_parent_id;
                     $new_category->save();
                 });
             } catch (Exception $e) {
-                Log::info($e->getMessage());
                 return Redirect::route('admin.category.index')->with('message',  'Đăng kí không thành công');
             }
 
@@ -78,7 +156,8 @@ class AdminController extends Controller
                 DB::transaction(function () use ($request) {
                     Category::where('id', $request->id)
                     ->update([
-                        'name' => $request->name
+                        'name' => $request->name,
+                        'category_parent_id' => $request->category_parent_id,
                     ]);
                 });
             } catch (Exception $e) {
@@ -451,11 +530,11 @@ class AdminController extends Controller
             try {
                 $patient = Patient::where('status', 0);
                 if($request->search_name_tab1) $patient = $patient->where('name', 'like', '%'. $request->search_name_tab1 . '%');
-                $patient = $patient->orderBy('id', 'desc')->get();
+                $patient = $patient->orderBy('name', 'ASC')->paginate(10);
 
                 $patient_tab2 = Patient::where('status', 0);
                 if($request->search_name_tab2) $patient_tab2 = $patient_tab2->where('name', 'like', '%'. $request->search_name_tab2 . '%');
-                $patient_tab2 = $patient_tab2->orderBy('id', 'desc')->get();
+                $patient_tab2 = $patient_tab2->orderBy('name', 'ASC')->paginate(10);
 
 
 
@@ -728,12 +807,43 @@ class AdminController extends Controller
                     $edit_sick->result2 = $request->result2;
                     $edit_sick->result3 = $request->result3;
                     $edit_sick->save();
+
+
+
+                    if ($request->hasFile('image_multiple')) {
+                        ImageSick::where('sick_id', $request->id_sick)->update(['delete_flag' => 1]);
+
+                        foreach($request->file('image_multiple') as $index=>$item) {
+
+                            $path_item = 'public/sicks';
+                            $extension_item = strtolower($item->extension());
+                            $file_name = Carbon::now()->format('Ymdhisu'). $index . '.' . $extension_item;
+
+                            $new_img_sick = new ImageSick();
+                            $new_img_sick->path = 'sicks';
+                            $new_img_sick->file_name = $file_name;
+                            $new_img_sick->sick_id = $request->id_sick;
+                            $new_img_sick->save();
+
+                            $item->storeAs($path_item, $file_name);
+                        }
+                    }
                 });
             } catch(Exception $e) {
                 return Redirect::route('admin.clinic.index', ['tab' => 2])->with('message', 'Cập nhập không thành công');
             }
 
             return Redirect::route('admin.clinic.index', ['tab' => 2])->with('message', 'Cập nhập thành công');
+        }
+
+        public function getImgSick(Request $request)
+        {
+            try {
+                $result = ImageSick::where('sick_id', $request->id)->where('delete_flag', 0)->get();
+                return response()->json($result, 200, [], JSON_UNESCAPED_UNICODE);
+            } catch (Exception $e) {
+                return response()->json([], 200, [], JSON_UNESCAPED_UNICODE);
+            }
         }
 
         public function dropdownGeneric(Request $request)

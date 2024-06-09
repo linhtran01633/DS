@@ -1,10 +1,61 @@
+// khu vực sử lý dành cho category cha
+    $('.update_category_parent').on('click', function(e){
+
+        let id = $(this).data('id');
+        let name = $(this).data('name');
+
+        $('#name_parent_popup').val(name);
+        $('#input_id_category').val(id);
+
+        $('#default-modal_parent').removeClass('hidden');
+    });
+
+    $('.cancel_popup_parent').on('click', function(e){
+
+        $('#name_parent_popup').val('');
+        $('#input_id_category').val('');
+
+        $('#default-modal_parent').addClass('hidden');
+    });
+
+    $(".delete_category_parent").on("click", function (q) {
+
+        let button = $(this);
+        button.attr('disabled', true);
+
+        let id = $(this).data('id');
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: deleteCategoryParent,
+            data: { id: id },
+            type: "POST",
+            success: function(result) {
+                button.parent().parent().remove();
+                thongbao('Xoá thành công');
+                button.attr('disabled', false);
+            },
+            error: function(error) {
+                console.log(error);
+                thongbao('Xoá không thành công');
+                button.attr('disabled', false);
+            },
+        });
+    });
+// kết thúc khu vực sử lý dành cho category cha
+
+
 // khu vực sử lý dành cho category
 $('.update_category').on('click', function(e){
 
     let id = $(this).data('id');
     let name = $(this).data('name');
+    let category_parent_id = $(this).data('category_parent_id');
 
     $('#name_popup').val(name);
+    $('#category_parent_id_popup').val(category_parent_id);
     $('#input_id_category').val(id);
 
     $('#default-modal').removeClass('hidden');
@@ -444,6 +495,31 @@ if(check_preview_image_extra) {
 }
 
 
+var preview_image_sick_edit = document.getElementById('image_sick_edit');
+if(preview_image_sick_edit) {
+    document.getElementById('image_sick_edit').addEventListener('change', function(event) {
+        let files = event.target.files;
+        let preview = document.getElementById('preview_image_sick_edit');
+        preview.innerHTML = ''; // Xóa bất kỳ hình ảnh trước đó nào trong phần xem trước
+
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            if (file) {
+                let reader = new FileReader();
+
+                reader.onload = function(e) {
+                    preview.innerHTML += `
+                        <div class="w-20 h-20 border border-gray-300 rounded-lg mx-2 shadow">
+                            <img class="w-full h-full rounded-lg show_enlarge" data-src="${e.target.result}" src="${e.target.result}" alt="Preview">
+                        </div>
+                    `;
+                }
+
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+}
 
 $(document).on('click', '.close_images', function(e) {
     $(this).parent().parent().remove();
@@ -455,7 +531,7 @@ $(document).on('click', '.show_enlarge', function(e) {
             // Tạo chuỗi HTML chứa div mới
     var newDivHTML = `
         <div class="fixed z-50 w-full h-full">
-            <div  class="relative mx-auto mt-16 border border-gray-300 rounded-lg mx-2 shadow" style="width:50%; aspect-ratio: 5/4">
+            <div  class="relative mx-auto mt-16 border border-gray-300 rounded-lg mx-2 shadow bg-white" style="width:50%; aspect-ratio: 5/4">
                 <button type="button" class="close_images absolute top-0 right-0 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -748,7 +824,7 @@ $('.patient_sicks').change(function(e) {
                                     data-breathing="${result_child.breathing}"
                                     data-bloodSugar="${result_child.bloodSugar}"
                                     >
-                                    <lable  for="diagnostic${result_child.id}">${result_detail}</lable>
+                                    <label  for="diagnostic${result_child.id}">${result_detail}</label>
                                 </div>
                             `;
                         });
@@ -807,8 +883,6 @@ $(document).on('click', '.diagnostic', function(e) {
         let breathing = $(this).data('breathing');
         let bloodSugar = $(this).data('bloodSugar');
 
-        console.log(bloodSugar);
-
         $('#t_sick_tab2').val(t);
         $('#id_sick_tab2').val(id);
         $('#ha_sick_tab2').val(ha);
@@ -825,6 +899,32 @@ $(document).on('click', '.diagnostic', function(e) {
         $('#dh_sick_tab2').val(bloodSugar);
         $('#weight_sick_tab2').val(weight);
         $('#symptom_sick_tab2').val(symptom);
+
+
+        $.ajax({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            url: getImgSickURL,
+            data: {id : id},
+            type: "get",
+            success: function(result) {
+                $('#image_sick_edit').val('');
+                if(result.length > 0) {
+                    let append = ``;
+                    result.forEach(element => {
+                        append += `
+                        <div class="w-20 h-20 border border-gray-300 rounded-lg mx-2 shadow">
+                            <img class="w-full h-full rounded-lg show_enlarge" data-src="/storage/${element.path}/${element.file_name}" src="/storage/${element.path}/${element.file_name}" alt="Preview">
+                        </div>`;
+                    });
+
+                    $('#preview_image_sick_edit').empty().append(append);
+                } else {
+                    $('#preview_image_sick_edit').empty();
+                }
+            },
+        });
 
     } else {
         emptySickTab2();
@@ -846,8 +946,10 @@ function emptySickTab2() {
     $('#date_sick_tab2').val('');
     $('#tall_sick_tab2').val('');
     $('#time_sick_tab2').val('');
+    $('#image_sick_edit').val('');
     $('#weight_sick_tab2').val('');
     $('#symptom_sick_tab2').val('');
+    $('#preview_image_sick_edit').empty();
 }
 
 $('.update_generic').on('click', function(e){
@@ -987,10 +1089,10 @@ $('.btn_medicine_supply').on('click', function(e){
                 result.list_prescription.forEach((element, index1 )=> {
                     $('.list_sick_popup').append(`
                         <div class="flex">
-                            <lable for="list_sick_popup_${index1}">
+                            <label for="list_sick_popup_${index1}">
                                 <input type="checkbox" class="list_sick_popup_class" id="list_sick_popup_${index1}" data-sick="${element.id}"/>
                                 ${element.date}_${element.result}
-                            </lable>
+                            </label>
                         </div>
                     `);
                 });

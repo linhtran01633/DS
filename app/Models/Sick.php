@@ -41,4 +41,9 @@ class Sick extends Model
     {
         return $this->hasOne(\App\Models\Prescription::class,'id_sick','id');
     }
+
+    public function SickImg()
+    {
+        return $this->hasMany(\App\Models\ImageSick::class,'sick_id','id');
+    }
 }

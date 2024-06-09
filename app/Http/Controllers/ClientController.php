@@ -29,8 +29,9 @@ class ClientController extends Controller
               $q->where('delete_flag', 0);
             }]);
 
-
-            if($request->category_id) {
+            if($request->group_category_id) {
+                $categorys = $categorys->whereIn('id', $request->group_category_id);
+            } else if($request->category_id) {
                 $categorys = $categorys->where('id', $request->category_id);
             } else {
                 $categorys = $categorys->whereHas('Product', function($query) {
@@ -149,7 +150,6 @@ class ClientController extends Controller
                 }
             });
         } catch (Exception $e) {
-            dd($e->getMessage());
             return redirect()->back();
         }
         return redirect()->back();

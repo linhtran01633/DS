@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class CategoryParent extends Model
 {
     use HasFactory;
-
-    protected $table = "categorys";
+    protected $table = "category_parents";
     public $incrementing = false;
     public $keyType = 'string';
     protected $fillable = [
         'name',
         'delete_flag',
-        'category_parent_id',
     ];
 
-    public function Product()
+    public function Category()
     {
-        return $this->hasMany(\App\Models\Product::class,'category_id','id');
+        return $this->hasMany(\App\Models\Category::class,'category_parent_id','id');
     }
 }

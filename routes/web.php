@@ -48,6 +48,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.index');
 
+    Route::get('/admin/dashboard/category_parent', [AdminController::class, 'categoryParent'])->name('admin.categoryParent.index');
+    Route::post('/admin/dashboard/categoryParentAdd', [AdminController::class, 'categoryParentAdd'])->name('admin.categoryParent.add');
+    Route::post('/admin/dashboard/categoryParentEdit', [AdminController::class, 'categoryParentEdit'])->name('admin.categoryParent.edit');
+    Route::post('/admin/dashboard/categoryParentxDelete', [AdminController::class, 'categoryParentDelete'])->name('admin.categoryParent.delete');
+
     Route::get('/admin/dashboard/category', [AdminController::class, 'categoryIndex'])->name('admin.category.index');
     Route::post('/admin/dashboard/categoryAdd', [AdminController::class, 'categoryAdd'])->name('admin.category.add');
     Route::post('/admin/dashboard/categoryEdit', [AdminController::class, 'categoryEdit'])->name('admin.category.edit');
@@ -96,6 +101,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/dashboard/sickAdd', [AdminController::class, 'sickAdd'])->name('admin.sick.add');
     Route::post('/admin/dashboard/sickEdit', [AdminController::class, 'sickEdit'])->name('admin.sick.edit');
     Route::get('/admin/dashboard/listPatientSicks', [AdminController::class, 'listPatientSicks'])->name('admin.listPatientSicks');
+    Route::get('/admin/dashboard/getImgSick', [AdminController::class, 'getImgSick'])->name('admin.getImgSick.get');
+
 
 
     Route::post('/admin/dashboard/addPrescription', [AdminController::class, 'addPrescription'])->name('admin.addPrescription');

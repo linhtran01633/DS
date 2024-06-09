@@ -179,11 +179,26 @@
                                         <ul class="space-y-4" aria-labelledby="mega-menu-dropdown-button">
 
                                             @foreach ($categorys_menu as $item)
-                                                <li>
-                                                    <a href="{{route('client.index', ['category_id' => $item->id])}}" class="text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500">
-                                                        {{$item->name}}
-                                                    </a>
-                                                </li>
+                                                @php
+                                                    $group_category_id = [];
+                                                    foreach ($item->category as $value) {
+                                                        $group_category_id[] = $value->id;
+                                                    }
+                                                @endphp
+                                                <ul>
+                                                    <li>
+                                                        <a href="{{route('client.index', ['group_category_id' => $group_category_id])}}" class="text-black dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500 text-base text-bold">
+                                                            {{$item->name}}
+                                                        </a>
+                                                    </li>
+                                                    @foreach ($item->category as $value)
+                                                        <li>
+                                                            <a href="{{route('client.index', ['category_id' => $value->id])}}" class=" ml-4 text-gray-500 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-500">
+                                                                {{$value->name}}
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
                                             @endforeach
                                         </ul>
                                     </div>

@@ -12,26 +12,39 @@
             <!-- tabs -->
                 <div class="relative">
                     <header class="flex items-end text-sm flex-wrap">
-                        <button class="border border-b-0 px-3 py-1 focus:outline-none rounded-tl-md" :class="activeTab===1 ? 'font-semibold' : ''" @click="activeTab=1" >
-                            1.Bệnh Nhân
+                        <button class="border border-b-0 px-3 py-1 focus:outline-none rounded-tl-md" :class="activeTab===1 ? 'font-semibold' : ''" >
+                            <a href="{{route('admin.clinic.index', ['tab'=> 1])}}">
+                                1.Bệnh Nhân
+                            </a>
                         </button>
-                        <button class="border border-b-0 px-3 py-1 focus:outline-none" :class="activeTab===2 ? 'font-semibold' : ''" @click="activeTab=2" >
-                            2.Khám Bệnh
+                        <button class="border border-b-0 px-3 py-1 focus:outline-none" :class="activeTab===2 ? 'font-semibold' : ''" >
+                            <a href="{{route('admin.clinic.index', ['tab'=> 2])}}">
+                                2.Khám Bệnh
+                            </a>
                         </button>
-                        <button class="border border-b-0 px-3 py-1 focus:outline-none" :class="activeTab===3 ? 'font-semibold' : ''" @click="activeTab=3">
-                            3.Hoạt Chất
+                        <button class="border border-b-0 px-3 py-1 focus:outline-none" :class="activeTab===3 ? 'font-semibold' : ''">
+                            <a href="{{route('admin.clinic.index', ['tab'=> 3])}}">
+                                3.Hoạt Chất
+                            </a>
                         </button>
-                        <button class="border border-b-0 px-3 py-1 focus:outline-none" :class="activeTab===4 ? 'font-semibold' : ''" @click="activeTab=4">
-                            4.Đơn Vị Thuốc
+                        <button class="border border-b-0 px-3 py-1 focus:outline-none" :class="activeTab===4 ? 'font-semibold' : ''">
+
+                            <a href="{{route('admin.clinic.index', ['tab'=> 4])}}">
+                                4.Đơn Vị Thuốc
+                            </a>
                         </button>
-                        <button class="border border-b-0 px-3 py-1 focus:outline-none" :class="activeTab===5 ? 'font-semibold' : ''" @click="activeTab=5">
-                            5.Dược Phẩm
+                        <button class="border border-b-0 px-3 py-1 focus:outline-none" :class="activeTab===5 ? 'font-semibold' : ''">
+                            <a href="{{route('admin.clinic.index', ['tab'=> 5])}}">
+                                5.Dược Phẩm
+                            </a>
                         </button>
-                        <button class="border border-b-0 px-3 py-1 focus:outline-none rounded-tr-md" :class="activeTab===6 ? 'font-semibold' : ''" @click="activeTab=6">
-                            6.Cách Dùng
+                        <button class="border border-b-0 px-3 py-1 focus:outline-none rounded-tr-md" :class="activeTab===6 ? 'font-semibold' : ''">
+                            <a href="{{route('admin.clinic.index', ['tab'=> 6])}}">
+                                6.Cách Dùng
+                            </a>
                         </button>
                     </header>
-                    <div class="border p-2 overflow-y-auto rounded-b-xl rounded-tr-xl bg-white" id="tabs-contents" style="height:70vh">
+                    <div class="border p-2 overflow-y-auto rounded-b-xl rounded-tr-xl bg-white" id="tabs-contents" style="height:80vh">
                         <div x-show="activeTab===1">
                             <div class="p-2 grid gap-4 sm:grid-cols-2 sm:gap-6">
                                 <form action="{{route('admin.patient.add')}}" method="post" class="grid gap-1 sm:grid-cols-2 sm:gap-2">
@@ -161,7 +174,16 @@
                                 </p>
 
                                 <div class="flex justify-between my-2">
-                                    <div></div>
+                                    <div>
+                                        @if(isset($patient) && count($patient) > 0)
+                                            {{
+                                                $patient->appends(array(
+                                                    'tab' => $tab,
+                                                    'search_name_tab1' => old('search_name_tab1'),
+                                                ))->links()
+                                            }}
+                                        @endif
+                                    </div>
                                     <div>
                                         <form method="GET" action="{{ route('admin.clinic.index')}}" class="flex">
                                             <input type="hidden" name="tab" value="1">
@@ -363,7 +385,7 @@
 
                                     <div class="sm:col-span-2">
                                         <label for="image_sick_edit" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Hình Ảnh Đính Kèm</label>
-                                        <input type="file" name="image_multiple[]" multiple id="image_sick_edit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Mô Tả Ngắn" required="">
+                                        <input type="file" name="image_multiple[]" accept="image/*" multiple id="image_sick_edit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Mô Tả Ngắn" required="">
                                         <div class="mt-2 flex items-center flex-warp" id="preview_image_sick_edit"></div>
                                     </div>
 
@@ -387,7 +409,16 @@
                                 </p>
 
                                 <div class="flex justify-between my-2">
-                                    <div></div>
+                                    <div>
+                                        @if(isset($patient_tab2) && count($patient_tab2) > 0)
+                                            {{
+                                                $patient_tab2->appends(array(
+                                                    'tab' => $tab,
+                                                    'search_name_tab2' => old('search_name_tab2'),
+                                                ))->links()
+                                            }}
+                                        @endif
+                                    </div>
                                     <div>
                                         <form method="GET" action="{{ route('admin.clinic.index')}}" class="flex">
                                             <input type="hidden" name="tab" value="2">
