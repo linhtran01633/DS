@@ -22,4 +22,9 @@ class Category extends Model
     {
         return $this->hasMany(\App\Models\Product::class,'category_id','id');
     }
+
+    public function CategoryParent()
+    {
+        return $this->hasOne(\App\Models\CategoryParent::class,'id','category_parent_id');
+    }
 }

@@ -117,8 +117,8 @@ class AdminController extends Controller
                 $page_current = 'category';
 
 
-                $categorys = Category::where('delete_flag', 0)->orderBy('name', 'ASC');
                 $categoryParents = CategoryParent::where('delete_flag', 0)->orderBy('name', 'ASC')->get();
+                $categorys = Category::with('CategoryParent')->where('delete_flag', 0)->orderBy('name', 'ASC');
 
                 if($request->search_name) $categorys = $categorys->where('name','LIKE', '%'.$request->search_name .'%');
 

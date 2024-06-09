@@ -62,20 +62,22 @@
                     <thead class="bg-gray-800 text-white">
                         <tr>
                             <th class="w-1/12 text-left py-3 px-4 uppercase font-semibold text-sm">STT</th>
-                            <th class="w-8/12 text-left py-3 px-4 uppercase font-semibold text-sm">TÊN DANH MỤC</th>
+                            <th class="w-4/12 text-left py-3 px-4 uppercase font-semibold text-sm">TÊN DANH MỤC CHA</th>
+                            <th class="w-4/12 text-left py-3 px-4 uppercase font-semibold text-sm">TÊN DANH MỤC CON</th>
                             <th class="w-3/12 text-left py-3 px-4 uppercase font-semibold text-sm">TRẠNG THÁI</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-700">
                         @if (count($categorys) <= 0)
                             <tr>
-                                <td colspan="3" class="text-center">không có dữ liệu</td>
+                                <td colspan="4" class="text-center">không có dữ liệu</td>
                             </tr>
                         @else
                             @foreach ($categorys as $index=>$category)
                                 <tr>
                                     <td class="w-1/12 text-left py-2 px-2">{{$index + 1}}</td>
-                                    <td class="w-8/12 text-left py-2 px-2">{{$category->name}}</td>
+                                    <td class="w-4/12 text-left py-2 px-2">{{$category->CategoryParent ? $category->CategoryParent->name : ''}}</td>
+                                    <td class="w-4/12 text-left py-2 px-2">{{$category->name}}</td>
                                     <td class="w-3/12 text-left py-2 px-2">
                                         <button type="button" data-id="{{$category->id}}" data-name="{{$category->name}}" data-category_parent_id="{{$category->category_parent_id}}" class="update_category focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-1 mr-1 dark:focus:ring-yellow-900">
                                             Cập nhập
@@ -88,7 +90,6 @@
                                 </tr>
                             @endforeach
                         @endif
-
                     </tbody>
                 </table>
             </div>
