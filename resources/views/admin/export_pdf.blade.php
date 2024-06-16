@@ -127,7 +127,7 @@
                             </tr>
                         </table>
 
-                        &emsp;&emsp; Mỗi ngày{{$item->every_day}}lần&emsp;Mỗi lần {{$item->every_times}} @if ($item->Drug && $item->Drug->DrugUnit){{$item->Drug->DrugUnit->name}}@endif {{$item->number_of_day}}ngày
+                        &emsp;&emsp; ngày{{$item->every_day}}lần&emsp; lần {{$item->every_times}} @if ($item->Drug && $item->Drug->DrugUnit){{$item->Drug->DrugUnit->name}}@endif {{$item->number_of_day}}ngày
                         &emsp; (<span class="bold">{{$item->dosage}}</span>)
                     </div>
                 @endforeach

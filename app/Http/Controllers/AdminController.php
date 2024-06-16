@@ -529,11 +529,22 @@ class AdminController extends Controller
         {
             try {
                 $patient = Patient::where('status', 0);
-                if($request->search_name_tab1) $patient = $patient->where('name', 'like', '%'. $request->search_name_tab1 . '%');
+                if($request->search_name_tab1) {
+                    $patient = $patient->where(function($q) use($request) {
+                        $q->where('name', 'like', '%'. $request->search_name_tab1 . '%');
+                        $q->orWhere('phone', 'like', '%'. $request->search_name_tab1 . '%');
+                    });
+                }
+
                 $patient = $patient->orderBy('name', 'ASC')->paginate(10);
 
                 $patient_tab2 = Patient::where('status', 0);
-                if($request->search_name_tab2) $patient_tab2 = $patient_tab2->where('name', 'like', '%'. $request->search_name_tab2 . '%');
+                if($request->search_name_tab2) {
+                    $patient_tab2 = $patient_tab2->where(function($q) use($request) {
+                        $q->where('name', 'like', '%'. $request->search_name_tab2 . '%');
+                        $q->orWhere('phone', 'like', '%'. $request->search_name_tab2 . '%');
+                    });
+                }
                 $patient_tab2 = $patient_tab2->orderBy('name', 'ASC')->paginate(10);
 
 
@@ -554,16 +565,21 @@ class AdminController extends Controller
                 if($request->search_name_tab6) $usage = $usage->where('name', 'like', '%'. $request->search_name_tab6 . '%');
                 $usage = $usage->orderBy('id', 'desc')->get();
 
+                $date = Carbon::now()->format('Y-m-d');
+                $hours = Carbon::now()->format('H:i');
+
                 $request->flash();
 
                 return view('admin.clinic')->with([
+                    'date' => $date,
                     'drug' => $drug,
+                    'hours' => $hours,
                     'usage' => $usage,
                     'generic' => $generic,
                     'patient' => $patient,
+                    'tab' => $request->tab,
                     'drugUnit' => $drugUnit,
                     'patient_tab2' => $patient_tab2,
-                    'tab' => $request->tab,
                 ]);
             } catch(Exception $e) {
                 return view('page_404');
