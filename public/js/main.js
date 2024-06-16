@@ -38,7 +38,6 @@
                 button.attr('disabled', false);
             },
             error: function(error) {
-                console.log(error);
                 thongbao('Xoá không thành công');
                 button.attr('disabled', false);
             },
@@ -151,7 +150,6 @@ $('.update_product').on('click', function(e){
         data: { id: id },
         type: "GET",
         success: function(result) {
-            console.log(result);
             $('#id_edit').val(result.id);
             $('#name_edit').val(result.name);
             $('#brand_edit').val(result.brand);
@@ -171,7 +169,6 @@ $('.update_product').on('click', function(e){
             }
 
             if(result.product_img.length > 0) {
-                console.log('123');
                 let append = ``;
                 result.product_img.forEach(element => {
                     append += `
@@ -277,7 +274,6 @@ $('.update_news').on('click', function(e){
         data: { id: id },
         type: "GET",
         success: function(result) {
-            console.log(result);
             $('#id_edit').val(result.id);
             $('#title_edit').val(result.title);
             $('#link_youtube_edit').val(result.image);
@@ -306,7 +302,6 @@ $('.cancel_popup_news').on('click', function(e){
 
 
 $('.detail_news').on('click', function(e){
-    console.log('clicked detail news');
     let id = $(this).data('id');
     window.location.href = `/tin-tức-chi-tiết?id=${id}`;
 });
@@ -326,7 +321,6 @@ $('.detail_invoice').on('click', function(e){
         data: { id: id },
         type: "GET",
         success: function(result) {
-            console.log(result);
             let append = ``;
             result.invoice_detail.forEach(element => {
                 append += `
@@ -526,9 +520,7 @@ $(document).on('click', '.close_images', function(e) {
 });
 
 $(document).on('click', '.show_enlarge', function(e) {
-    console.log('show_enlarge');
-
-            // Tạo chuỗi HTML chứa div mới
+    // Tạo chuỗi HTML chứa div mới
     var newDivHTML = `
         <div class="fixed z-50 w-full h-full">
             <div  class="relative mx-auto mt-16 border border-gray-300 rounded-lg mx-2 shadow bg-white" style="width:50%; aspect-ratio: 5/4">
@@ -565,7 +557,6 @@ if(length_card.length > 0) {
 }
 
 $('.add_cards').on('click', function(e){
-    console.log('add card');
     let id = $(this).data('id');
     let quantity = 1;
     let quatity_product = $('#quatity_product_detail').val();
@@ -608,8 +599,6 @@ if(check_page_card == 1) {
             data: {data : data},
             type: "GET",
             success: function(result) {
-                console.log('result');
-                console.log(result);
                 let append = ``;
                 let total = 0
                 let index = 0
@@ -643,7 +632,6 @@ if(check_page_card == 1) {
 }
 
 $(document).on('change', '.quantity_product', function(e){
-    console.log('123');
     if($(this).val() == '' || $(this).val() == 0) $(this).val(1);
 
     let total = 0;
@@ -689,7 +677,6 @@ $(document).on('click','.delete_product_card', function(e) {
 
 
 $('.detail_products').on('click', function(e){
-    console.log('123');
     let id = $(this).data('id');
     window.location.href = `/detail?id=${id}`;
 });
@@ -802,7 +789,6 @@ $('.patient_sicks').change(function(e) {
                     if (array_temp.hasOwnProperty(key)) {
                         append += `<div>${key}</div>`;
                         array_temp[key].forEach(function(result_child) {
-                            console.log(result_child);
                             let result_detail = result_child.result ? result_child.result : 'đăng kí khám';
                             append += `
                                 <div class="truncate w-full ml-4">
@@ -843,7 +829,6 @@ $('.patient_sicks').change(function(e) {
                 emptySickTab2();
             },
             error: function(error) {
-                console.log(error);
             },
         });
     } else {
@@ -861,8 +846,6 @@ $('.patient_sicks').change(function(e) {
 });
 
 $(document).on('click', '.diagnostic', function(e) {
-    console.log('clicked diagnostic');
-
     $('.diagnostic').not(this).prop('checked', false); // Loại bỏ chọn tất cả các checkbox khác
 
     if ($(this).is(':checked')) {
@@ -1020,7 +1003,6 @@ $('.btn_medicine_supply').on('click', function(e){
             data: {id : $('#id_sick_tab2').val()},
             type: "get",
             success: function(result) {
-                console.log(result);
                 $('#name_bn').val(result.sick.patient.name);
                 $('#chuan_doan').val(result.sick.result);
                 $('#ket_luan').val(result.sick.result);
@@ -1111,7 +1093,6 @@ $('.cancel_popup_medicine_supply').on('click', function(e){
 });
 
 $('.add_them_thuoc').on('click', function(e){
-    console.log('thêm thuốc');
     let button = $(this);
     button.attr('disabled', true);
 
@@ -1158,7 +1139,6 @@ function handle_add_drug(data, button, status) {
             data: data,
             type: "POST",
             success: function(result) {
-                console.log(result);
                 let index = Number($('#index_table').val()) + 1;
                 let append = `
                     <tr>
@@ -1208,7 +1188,6 @@ function handle_add_drug(data, button, status) {
                 $('#index_table').val(index);
             },
             error: function(error) {
-                console.log(error);
                 thongbao(status +' không thành công');
                 button.attr('disabled', false);
             },
@@ -1298,9 +1277,7 @@ $('.save_prescription').on('click', function(e){
     e.preventDefault();
     let button = $(this);
     button.attr('disabled', true);
-    console.log('clicked save_prescription');
     let data_form = $("#submit_form_save_prescription").serialize();
-    console.log(data_form);
 
     $.ajax({
         headers: {
@@ -1313,19 +1290,9 @@ $('.save_prescription').on('click', function(e){
             thongbao('Lưu thành công');
             // e.Graphics.DrawString((i + 1) + "." + DonThuoc.Rows[i]["Ten thuoc"] + "\t" + "\t" + DonThuoc.Rows[i]["so luong"] + " " + DonThuoc.Rows[i]["don vi thuoc"], new Font("Arial", 15, FontStyle.Italic), Brushes.Black, new Point(50, h));
             // e.Graphics.DrawString("\t" + DonThuoc.Rows[i]["lieu dung"] + "(" + DonThuoc.Rows[i]["so ngay"] + "  ngày) " +"\t\t\t\t\t\t\t", new Font("Arial", 15, FontStyle.Underline), Brushes.Black, new Point(50, k));
-
-            result.forEach(function(item) {
-                let append = `
-                <div>
-
-                </div>
-                `;
-
-            });
             button.attr('disabled', false);
         },
         error: function(error) {
-            console.log(error);
             thongbao('Lưu không thành công');
             button.attr('disabled', false);
         },
@@ -1347,7 +1314,6 @@ $('.give_back').on('click', function(e){
             data: {id : id},
             type: "get",
             success: function(result) {
-                console.log(result);
                 let index =  1;
                 if(result.sick.prescription != null) {
                     result.sick.prescription.prescription_detail.forEach(element => {
@@ -1415,3 +1381,24 @@ $(document).on('click', '.list_sick_popup_class', function(e) {
 $(document).on('click','#printerFile', function(e) {
    $('#export_pdf').submit();
 })
+
+$(document).on('change', '.sl', function(e){
+    let total = 1;
+    $('.wraper-sl .sl').map(function(index,elm) {
+        let number = 1;
+        if($(elm).val() != '') number = $(elm).val();
+        total = total * Number(number);
+    });
+
+    $('.total_sl').val(total);
+});
+
+$(document).on('change', '#name_drug_add', function(e) {
+    let select = this;
+    let selectedOption = select.options[select.selectedIndex];
+    let price = selectedOption.getAttribute('data-price');
+    if(price =='') price = 0;
+    $('#price_drug_add').val(price);
+});
+
+

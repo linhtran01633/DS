@@ -56,7 +56,7 @@
                                     </div>
                                     <div class="w-full">
                                         <label for="set_patient" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Giới Tính</label>
-                                        <select id="set_patient" required name="sex" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                        <select id="set_patient" name="sex" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                             <option value="0">Nam</option>
                                             <option value="1">Nữ</option>
                                         </select>
@@ -64,11 +64,11 @@
 
                                     <div class="w-full">
                                         <label for="date_patient" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Ngày Sinh</label>
-                                        <input type="date" name="date" id="date_patient" value="{{old('date')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Họ và tên" required="">
+                                        <input type="date" name="date" id="date_patient" value="{{old('date')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Họ và tên" >
                                     </div>
                                     <div class="w-full">
                                         <label for="ethnic_patient" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Dân Tộc</label>
-                                        <select id="ethnic_patient" required name="ethnic" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                        <select id="ethnic_patient" name="ethnic" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                             <option value="0">Kinh</option>
                                             <option value="1">Dân Tộc Thiểu Số</option>
                                         </select>
@@ -76,12 +76,12 @@
 
                                     <div class="sm:col-span-2">
                                         <label for="address_patient" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Địa Chỉ</label>
-                                        <input type="text" name="address" id="address_patient" value="{{old('address')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Địa chỉ" required="">
+                                        <input type="text" name="address" id="address_patient" value="{{old('address')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Địa chỉ">
                                     </div>
 
                                     <div class="sm:col-span-2">
                                         <label for="workshop_patient" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nơi Làm Việc</label>
-                                        <input type="text" name="workshop" id="workshop_patient" value="{{old('workshop')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nơi Làm Việc" required="">
+                                        <input type="text" name="workshop" id="workshop_patient" value="{{old('workshop')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Nơi Làm Việc">
                                     </div>
 
                                     <div class="sm:col-span-2">
@@ -255,7 +255,7 @@
                                     <div class="sm:col-span-2 grid gap-1 sm:grid-cols-3 sm:gap-2">
                                         <div class="w-full">
                                             <label class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Ngày Sinh</label>
-                                            <input type="date" id="date_patient_tab2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Họ và tên" required="">
+                                            <input type="date" id="date_patient_tab2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Họ và tên">
                                         </div>
                                         <div class="w-full">
                                             <label class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Dân Tộc</label>
@@ -273,7 +273,7 @@
 
                                     <div class="w-full">
                                         <label class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Địa Chỉ</label>
-                                        <input type="text" id="address_patient_tab2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Địa chỉ" required="">
+                                        <input type="text" id="address_patient_tab2" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Địa chỉ">
                                     </div>
 
                                     <div class="w-full">
@@ -577,13 +577,13 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="flex my-1 items-center flex-wrap">
+                                                <div class="flex my-1 items-center flex-wrap wraper-sl">
                                                     <div class="flex items-center mb-1">
                                                         <span class="w-20">Tên</span>
                                                         <select id="name_drug_add" class="w-48 mr-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                             <option value="">Chọn tên thuốc</option>
                                                             @foreach ($drug as $item)
-                                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                                                <option value="{{$item->id}}" data-price="{{$item->price}}">{{$item->name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>
@@ -595,21 +595,21 @@
 
                                                     <div class="flex items-center mb-1">
                                                         <span class="w-20">Mỗi ngày</span>
-                                                        <input type="number" id="every_day_drug_add" min="1" class="w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                        <input type="number" id="every_day_drug_add" min="1" class="sl w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                         <span class="w-12 mr-2">lần</span>
                                                     </div>
 
                                                     <div class="flex items-center mb-1">
                                                         <span class="w-20">Mỗi lần</span>
-                                                        <input type="number" id="every_times_drug_add" min="1" class="mr-2 w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                        <input type="number" id="every_times_drug_add" min="1" class="sl mr-2 w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                     </div>
                                                     <div class="flex items-center mb-1">
                                                         <span class="w-20">Số ngày</span>
-                                                        <input type="number" id="number_of_day_drug_add" min="1" class="mr-2 w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                        <input type="number" id="number_of_day_drug_add" min="1" class="sl mr-2 w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                     </div>
                                                     <div class="flex items-center mb-1">
                                                         <span class="w-20">Số lượng</span>
-                                                        <input type="number" id="quantity_drug_add" min="1" class="mr-2 w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                        <input type="number" id="quantity_drug_add" min="1" class="total_sl mr-2 w-12 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                     </div>
                                                 </div>
 
@@ -951,7 +951,7 @@
                                     </div>
                                     <div class="w-full">
                                         <label for="price_drug" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Giá Dược Phẩm</label>
-                                        <input type="number" name="price" id="price_drug" value="{{old('price')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="">
+                                        <input type="number" name="price" id="price_drug" value="{{old('price')}}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     </div>
 
                                     <div class="w-full">

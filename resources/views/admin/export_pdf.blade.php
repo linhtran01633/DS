@@ -118,7 +118,7 @@
                             <tr>
                                 <td class="bold col1">{{$index + 1}}.</td>
                                 <td class="italic col2">{{$item->Drug->name}}</td>
-                                <td class="col3">
+                                <td class="col3"> SL:
                                     {{$item->quantity}}
                                     @if ($item->Drug && $item->Drug->DrugUnit)
                                         {{$item->Drug->DrugUnit->name}}
@@ -126,11 +126,9 @@
                                 </td>
                             </tr>
                         </table>
-                        <span class="bold">
-                            &emsp;&emsp;{{$item->dosage}}
-                        </span>
-                        -({{$item->number_of_day}}ngày)
 
+                        &emsp;&emsp; Mỗi ngày{{$item->every_day}}lần&emsp;Mỗi lần {{$item->every_times}} @if ($item->Drug && $item->Drug->DrugUnit){{$item->Drug->DrugUnit->name}}@endif {{$item->number_of_day}}ngày
+                        &emsp; (<span class="bold">{{$item->dosage}}</span>)
                     </div>
                 @endforeach
             @endif
